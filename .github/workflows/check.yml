@@ -8,21 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install requests
+      - name: Install Dependencies
+        run: |
+          pip install requests
 
-      - name: Run script
-        run: python scrape_clicktt.py
+      - name: Run Analysis
+        run: |
+          python analyze_team.py
 
       - name: Upload HTML
         uses: actions/upload-artifact@v4
         with:
-          name: clicktt-html
-          path: clicktt.html
+          name: team-page
+          path: team_page.html
