@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests
-
+          pip install requests beautifulsoup4
+          
       - name: Run Analysis
         run: |
           python analyze_team.py
