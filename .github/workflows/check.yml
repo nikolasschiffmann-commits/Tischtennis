@@ -19,13 +19,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install requests beautifulsoup4
-          
-      - name: Run Analysis
-        run: |
-          python analyze_team.py
 
-      - name: Upload HTML
-        uses: actions/upload-artifact@v4
-        with:
-          name: team-page
-          path: team_page.html
+      - name: Run Report
+        run: |
+          python report.py
