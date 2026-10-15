@@ -4,4 +4,7 @@ url = "https://www.mytischtennis.de/click-tt/ByTTV/26--27/ligen/Bezirksliga_Grup
 
 html = requests.get(url).text
 
-print(html[:1000])
+with open("clicktt.html", "w", encoding="utf-8") as f:
+    f.write(html)
+
+print("Datei gespeichert")
