@@ -8,8 +8,10 @@ from datetime import datetime, timedelta, date
 # HIER DIE GEWÜNSCHTE KW EINSTELLEN
 # =====================================
 
-KW = 41
-JAHR = 2026
+import os
+
+KW = int(os.environ["KW"])
+JAHR = int(os.environ["JAHR"])
 
 # =====================================
 
