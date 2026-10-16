@@ -30,4 +30,3 @@ def search(obj, path=""):
             search(item, f"{path}[{idx}]")
 
 search(data)
-``
