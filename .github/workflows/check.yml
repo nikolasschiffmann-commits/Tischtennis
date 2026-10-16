@@ -2,6 +2,16 @@ name: TT Agent
 
 on:
   workflow_dispatch:
+    inputs:
+      kw:
+        description: 'Kalenderwoche'
+        required: true
+        default: '41'
+
+      jahr:
+        description: 'Jahr'
+        required: true
+        default: '2026'
 
 jobs:
   report:
@@ -21,6 +31,9 @@ jobs:
           pip install requests
 
       - name: Generate Report
+        env:
+          KW: ${{ github.event.inputs.kw }}
+          JAHR: ${{ github.event.inputs.jahr }}
         run: |
           python generate_report.py
 
