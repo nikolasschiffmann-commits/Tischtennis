@@ -33,10 +33,10 @@ jobs:
         run: |
           pip install requests pillow
 
-      - name: Generate Report
+     - name: Generate Report
         env:
-          KW: ${{ github.event.inputs.kw }}
-          JAHR: ${{ github.event.inputs.jahr }}
+          KW: ${{ github.event.inputs.kw || '' }}
+          JAHR: ${{ github.event.inputs.jahr || '' }}
         run: |
           python generate_report.py
 
