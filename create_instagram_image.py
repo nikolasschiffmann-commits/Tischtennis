@@ -13,21 +13,21 @@ draw.rectangle(
 
 # Ergebnisse Jugend
 draw.rectangle(
-    [(140, 880), (940, 1090)],
+    [(140, 840), (940, 1070)],
     outline="green",
     width=5
 )
 
 # Heimspiele Erwachsene
 draw.rectangle(
-    [(140, 1450), (940, 1640)],
+    [(140, 1250), (940, 1540)],
     outline="blue",
     width=5
 )
 
 # Heimspiele Jugend
 draw.rectangle(
-    [(140, 1720), (940, 2130)],
+    [(140, 1560), (940, 1730)],
     outline="yellow",
     width=5
 )
