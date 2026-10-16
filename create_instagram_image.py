@@ -10,7 +10,7 @@ font_header = ImageFont.truetype(
 
 font_text = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    34
+    32
 )
 
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
