@@ -191,31 +191,31 @@ for team in JUGEND:
         date_str = list(day.keys())[0]
         games = day[date_str]
 
-    for game in games:
+        for game in games:
 
-        if (
-            game["state"] == "scheduled"
-            and "DJK Leutershausen" in game["team_home"]
-        ):
-            home_games.append(game)
+            if (
+                game["state"] == "scheduled"
+                and "DJK Leutershausen" in game["team_home"]
+            ):
+                home_games.append(game)
 
-next_home = None
+    next_home = None
 
-if home_games:
+    if home_games:
 
-    home_games.sort(
-        key=lambda x: x["date"]
-    )
+        home_games.sort(
+            key=lambda x: x["date"]
+        )
 
-    next_home = home_games[0]
+        next_home = home_games[0]
 
     if next_home:
 
         dt = datetime.fromisoformat(
-    next_home["date"]
-).astimezone(
-    ZoneInfo("Europe/Berlin")
-)
+            next_home["date"]
+        ).astimezone(
+            ZoneInfo("Europe/Berlin")
+        )
 
         report.append(
             f'{next_home["team_home"]} - {next_home["team_away"]}'
