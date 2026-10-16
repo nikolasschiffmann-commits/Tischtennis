@@ -130,10 +130,10 @@ for team in ERWACHSENE:
 
     home_games = []
 
-for day in meetings:
+    for day in meetings:
 
-    date_str = list(day.keys())[0]
-    games = day[date_str]
+        date_str = list(day.keys())[0]
+        games = day[date_str]
 
     for game in games:
 
@@ -188,10 +188,10 @@ for team in JUGEND:
 
     home_games = []
 
-for day in meetings:
+    for day in meetings:
 
-    date_str = list(day.keys())[0]
-    games = day[date_str]
+        date_str = list(day.keys())[0]
+        games = day[date_str]
 
     for game in games:
 
