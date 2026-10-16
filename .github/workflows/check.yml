@@ -2,8 +2,8 @@ name: TT Agent
 
 on:
   schedule:
-   - cron: '0 16 * * 0'
-    
+    - cron: '0 16 * * 0'
+
   workflow_dispatch:
     inputs:
       kw:
@@ -33,7 +33,7 @@ jobs:
         run: |
           pip install requests pillow
 
-     - name: Generate Report
+      - name: Generate Report
         env:
           KW: ${{ github.event.inputs.kw || '' }}
           JAHR: ${{ github.event.inputs.jahr || '' }}
