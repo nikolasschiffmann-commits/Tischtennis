@@ -14,7 +14,10 @@ msg = EmailMessage()
 
 msg["Subject"] = f"DJK Instagram Post KW {kw}"
 msg["From"] = os.environ["EMAIL_USER"]
-msg["To"] = os.environ["EMAIL_TO"]
+msg["To"] = (
+    "nikolasschiffmann@gmail.com, "
+    "Nico-Bader@web.de"
+)
 
 msg.set_content(
     f"Der automatisch erzeugte Instagram-Post für KW {kw} befindet sich im Anhang."
