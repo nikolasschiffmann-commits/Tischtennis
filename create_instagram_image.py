@@ -95,7 +95,7 @@ def draw_centered_lines(lines, start_y):
 # Überschriften Ergebnisse
 
 draw.text(
-    (540, 585),
+    (540, 620),
     "ERWACHSENE",
     anchor="mm",
     fill=(0, 87, 110),
@@ -103,7 +103,7 @@ draw.text(
 )
 
 draw.text(
-    (540, 775),
+    (540, 800),
     "JUGEND",
     anchor="mm",
     fill=(0, 87, 110),
@@ -113,7 +113,7 @@ draw.text(
 # Überschriften Heimspiele
 
 draw.text(
-    (540, 1225),
+    (540, 1270),
     "ERWACHSENE",
     anchor="mm",
     fill=(0, 87, 110),
@@ -121,7 +121,7 @@ draw.text(
 )
 
 draw.text(
-    (540, 1485),
+    (540, 1500),
     "JUGEND",
     anchor="mm",
     fill=(0, 87, 110),
@@ -132,22 +132,22 @@ draw.text(
 
 draw_centered_lines(
     ergebnisse_erwachsene,
-    620
+    640
 )
 
 draw_centered_lines(
     ergebnisse_jugend,
-    810
+    830
 )
 
 draw_centered_lines(
     heimspiele_erwachsene,
-    1265
+    1290
 )
 
 draw_centered_lines(
     heimspiele_jugend,
-    1525
+    1520
 )
 
 img.save("instagram_post.png")
