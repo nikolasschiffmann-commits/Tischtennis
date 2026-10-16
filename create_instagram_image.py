@@ -10,7 +10,7 @@ font_header = ImageFont.truetype(
 
 font_text = ImageFont.truetype(
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-    26
+    27
 )
 
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
@@ -95,7 +95,7 @@ def draw_centered_lines(lines, start_y):
 # Überschriften Ergebnisse
 
 draw.text(
-    (540, 620),
+    (540, 630),
     "ERWACHSENE",
     anchor="mm",
     fill=(0, 87, 110),
@@ -103,7 +103,7 @@ draw.text(
 )
 
 draw.text(
-    (540, 800),
+    (540, 810),
     "JUGEND",
     anchor="mm",
     fill=(0, 87, 110),
@@ -113,7 +113,7 @@ draw.text(
 # Überschriften Heimspiele
 
 draw.text(
-    (540, 1270),
+    (540, 1280),
     "ERWACHSENE",
     anchor="mm",
     fill=(0, 87, 110),
