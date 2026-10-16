@@ -6,28 +6,28 @@ draw = ImageDraw.Draw(img)
 
 # Ergebnisse Erwachsene
 draw.rectangle(
-    [(120, 650), (980, 800)],
+    [(140, 640), (940, 820)],
     outline="red",
     width=5
 )
 
 # Ergebnisse Jugend
 draw.rectangle(
-    [(120, 900), (980, 1100)],
+    [(140, 880), (940, 1090)],
     outline="green",
     width=5
 )
 
 # Heimspiele Erwachsene
 draw.rectangle(
-    [(120, 1450), (980, 1650)],
+    [(140, 1450), (940, 1640)],
     outline="blue",
     width=5
 )
 
 # Heimspiele Jugend
 draw.rectangle(
-    [(120, 1750), (980, 2150)],
+    [(140, 1720), (940, 2130)],
     outline="yellow",
     width=5
 )
