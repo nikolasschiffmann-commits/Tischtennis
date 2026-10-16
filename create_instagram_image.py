@@ -3,7 +3,12 @@ from PIL import Image, ImageDraw, ImageFont
 img = Image.open("template.png")
 draw = ImageDraw.Draw(img)
 
-font = ImageFont.truetype(
+font_header = ImageFont.truetype(
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    30
+)
+
+font_text = ImageFont.truetype(
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
     26
 )
@@ -11,38 +16,16 @@ font = ImageFont.truetype(
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
     report = f.read()
 
-lines = report.splitlines()
+lines = [line.strip() for line in report.splitlines()]
 
-erw_results = []
-jug_results = []
-erw_home = []
-jug_home = []
+ergebnisse_erwachsene = []
+ergebnisse_jugend = []
+heimspiele_erwachsene = []
+heimspiele_jugend = []
 
 section = None
 
 for line in lines:
-
-    line = line.strip()
-
-    if line == "ERWACHSENE:" and section is None:
-        section = "erw_results"
-        continue
-
-    if line == "JUGEND:" and section == "erw_results":
-        section = "jug_results"
-        continue
-
-    if line == "NÄCHSTE HEIMSPIELE":
-        section = None
-        continue
-
-    if line == "ERWACHSENE:" and section is None:
-        section = "erw_home"
-        continue
-
-    if line == "JUGEND:" and section == "erw_home":
-        section = "jug_home"
-        continue
 
     if not line:
         continue
@@ -50,67 +33,121 @@ for line in lines:
     if line.startswith("ERGEBNISSE"):
         continue
 
-    if section == "erw_results":
-        erw_results.append(line)
+    if line == "ERWACHSENE:" and section is None:
+        section = "ergebnisse_erwachsene"
+        continue
 
-    elif section == "jug_results":
-        jug_results.append(line)
+    if line == "JUGEND:" and section == "ergebnisse_erwachsene":
+        section = "ergebnisse_jugend"
+        continue
 
-    elif section == "erw_home":
-        erw_home.append(line)
+    if line == "NÄCHSTE HEIMSPIELE":
+        section = "heimspiele"
+        continue
 
-    elif section == "jug_home":
-        jug_home.append(line)
+    if line == "ERWACHSENE:" and section == "heimspiele":
+        section = "heimspiele_erwachsene"
+        continue
+
+    if line == "JUGEND:" and section == "heimspiele_erwachsene":
+        section = "heimspiele_jugend"
+        continue
+
+    if section == "ergebnisse_erwachsene":
+        ergebnisse_erwachsene.append(line)
+
+    elif section == "ergebnisse_jugend":
+        ergebnisse_jugend.append(line)
+
+    elif section == "heimspiele_erwachsene":
+        heimspiele_erwachsene.append(line)
+
+    elif section == "heimspiele_jugend":
+        heimspiele_jugend.append(line)
 
 
-def draw_centered_block(text_lines, center_x, start_y):
+def draw_centered_lines(lines, start_y):
 
     y = start_y
 
-    for line in text_lines:
+    for line in lines:
 
         bbox = draw.textbbox(
             (0, 0),
             line,
-            font=font
+            font=font_text
         )
 
         width = bbox[2] - bbox[0]
 
-        x = center_x - width / 2
+        x = (1080 - width) / 2
 
         draw.text(
             (x, y),
             line,
             fill=(0, 87, 110),
-            font=font
+            font=font_text
         )
 
-        y += 38
+        y += 34
 
 
-draw_centered_block(
-    erw_results,
-    540,
-    630
+# Überschriften Ergebnisse
+
+draw.text(
+    (540, 585),
+    "ERWACHSENE",
+    anchor="mm",
+    fill=(0, 87, 110),
+    font=font_header
 )
 
-draw_centered_block(
-    jug_results,
-    540,
-    820
+draw.text(
+    (540, 775),
+    "JUGEND",
+    anchor="mm",
+    fill=(0, 87, 110),
+    font=font_header
 )
 
-draw_centered_block(
-    erw_home,
-    540,
-    1270
+# Überschriften Heimspiele
+
+draw.text(
+    (540, 1225),
+    "ERWACHSENE",
+    anchor="mm",
+    fill=(0, 87, 110),
+    font=font_header
 )
 
-draw_centered_block(
-    jug_home,
-    540,
-    1530
+draw.text(
+    (540, 1485),
+    "JUGEND",
+    anchor="mm",
+    fill=(0, 87, 110),
+    font=font_header
+)
+
+# Inhalte
+
+draw_centered_lines(
+    ergebnisse_erwachsene,
+    620
+)
+
+draw_centered_lines(
+    ergebnisse_jugend,
+    810
+)
+
+draw_centered_lines(
+    heimspiele_erwachsene,
+    1265
+)
+
+draw_centered_lines(
+    heimspiele_jugend,
+    1525
 )
 
 img.save("instagram_post.png")
