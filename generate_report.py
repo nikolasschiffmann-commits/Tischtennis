@@ -6,11 +6,16 @@ import json
 KW = 41
 JAHR = 2026
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
-today = datetime.today()
-last_week = today - timedelta(days=7)
-next_30_days = today + timedelta(days=30)
+kw_start = date.fromisocalendar(JAHR, KW, 1)
+kw_ende = date.fromisocalendar(JAHR, KW, 7)
+
+next_30_days = kw_ende + timedelta(days=30)
+
+print(f"KW {KW}")
+print(f"Von: {kw_start}")
+print(f"Bis: {kw_ende}")
 
 report = []
 
