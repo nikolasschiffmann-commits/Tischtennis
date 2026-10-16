@@ -20,9 +20,9 @@ jobs:
         run: |
           pip install requests beautifulsoup4
 
-      - name: Run Report
+      - name: Run Inspection
         run: |
-          python report.py
+          python inspect_json.py
       
       - name: Upload JSON
         uses: actions/upload-artifact@v4
