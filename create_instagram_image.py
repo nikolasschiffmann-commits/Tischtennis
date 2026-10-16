@@ -5,12 +5,12 @@ draw = ImageDraw.Draw(img)
 
 font_header = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    32
+    36
 )
 
 font_text = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    28
+    30
 )
 
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
