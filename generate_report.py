@@ -167,7 +167,7 @@ for team in ERWACHSENE:
 
         report.append(
             f'AM {dt.strftime("%d.%m")} UM '
-            f'{dt.strftime("%H")} UHR IN '
+            f'{dt.strftime("%H:%M")} UHR IN '
             f'{next_home["location"]["city"].upper()}'
         )
 
@@ -220,7 +220,7 @@ for team in JUGEND:
 
         report.append(
             f'AM {dt.strftime("%d.%m")} UM '
-            f'{dt.strftime("%H")} UHR IN '
+            f'{dt.strftime("%H:%M")} UHR IN '
             f'{next_home["location"]["city"].upper()}'
         )
 
