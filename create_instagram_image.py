@@ -5,12 +5,12 @@ draw = ImageDraw.Draw(img)
 
 font_header = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    30
+    32
 )
 
 font_text = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    26
+    28
 )
 
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
@@ -132,7 +132,7 @@ draw.text(
 
 draw_centered_lines(
     ergebnisse_erwachsene,
-    640
+    650
 )
 
 draw_centered_lines(
@@ -142,7 +142,7 @@ draw_centered_lines(
 
 draw_centered_lines(
     heimspiele_erwachsene,
-    1290
+    1300
 )
 
 draw_centered_lines(
