@@ -2,6 +2,10 @@ from teams import TEAMS
 import requests
 import re
 import json
+
+KW = 41
+JAHR = 2026
+
 from datetime import datetime, timedelta
 
 today = datetime.today()
