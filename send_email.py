@@ -1,23 +1,23 @@
 import os
-from datetime import date
+import smtplib
 
+from datetime import date
+from email.message import EmailMessage
+
+# KW bestimmen
 if os.environ.get("KW"):
     kw = os.environ["KW"]
 else:
     kw = str(date.today().isocalendar().week)
 
-import smtplib
-
-from email.message import EmailMessage
-
 msg = EmailMessage()
 
-msg["Subject"] = f"DJK Instagram Post KW {KW}"
+msg["Subject"] = f"DJK Instagram Post KW {kw}"
 msg["From"] = os.environ["EMAIL_USER"]
 msg["To"] = os.environ["EMAIL_TO"]
 
 msg.set_content(
-    "Der aktuelle Instagram-Post befindet sich im Anhang."
+    f"Der automatisch erzeugte Instagram-Post für KW {kw} befindet sich im Anhang."
 )
 
 with open("instagram_post.png", "rb") as f:
@@ -27,7 +27,7 @@ msg.add_attachment(
     img_data,
     maintype="image",
     subtype="png",
-    filename="instagram_post.png"
+    filename=f"instagram_post_KW{kw}.png"
 )
 
 with smtplib.SMTP_SSL(
@@ -42,4 +42,4 @@ with smtplib.SMTP_SSL(
 
     smtp.send_message(msg)
 
-print("E-Mail erfolgreich versendet")
+print(f"E-Mail für KW {kw} erfolgreich versendet")
