@@ -1,38 +1,34 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 img = Image.open("template.png")
 
 draw = ImageDraw.Draw(img)
 
-# Ergebnisse Erwachsene
-draw.text(
-    (160, 630),
-    "DJK Leutershausen - Heimatverein Burglauer 10:0",
-    fill="black"
+# Standardschrift verwenden
+font = ImageFont.truetype(
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    40
 )
 
-# Ergebnisse Jugend
-draw.text(
-    (160, 820),
-    "DJK Leutershausen II - TSV Arnshausen II 8:2\n"
-    "DJK Leutershausen III - Heimatverein Burglauer IV 6:4",
-    fill="black"
+text = "DJK Leutershausen - Heimatverein Burglauer 10:0"
+
+# Textbreite ermitteln
+bbox = draw.textbbox(
+    (0, 0),
+    text,
+    font=font
 )
 
-# Heimspiele Erwachsene
-draw.text(
-    (160, 1270),
-    "DJK Leutershausen - DJK Brebersdorf\n"
-    "AM 16.10 UM 19:00 UHR IN HOHENROTH",
-    fill="black"
-)
+text_width = bbox[2] - bbox[0]
 
-# Heimspiele Jugend
+# Mittelpunkt des roten Kastens
+x = (1080 - text_width) / 2
+
 draw.text(
-    (160, 1530),
-    "DJK Leutershausen II - TSV Bad Königshofen V\n"
-    "AM 22.10 UM 17:30 UHR IN LEUTERSHAUSEN",
-    fill="black"
+    (x, 650),
+    text,
+    fill=(0, 87, 110),
+    font=font
 )
 
 img.save("instagram_post.png")
