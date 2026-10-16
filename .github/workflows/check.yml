@@ -48,6 +48,14 @@ jobs:
         run: |
           python create_instagram_image.py
 
+      - name: Send Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          python send_email.py
+
       - name: Upload Image
         uses: actions/upload-artifact@v4
         with:
