@@ -49,6 +49,8 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          KW: ${{ github.event.inputs.kw || '' }}
+          JAHR: ${{ github.event.inputs.jahr || '' }}
         run: |
           python send_email.py
 
