@@ -1,7 +1,6 @@
 name: TT Agent
 
 on:
-on:
   # Automatischer Lauf jeden Sonntag
   # 16:00 UTC = 18:00 Uhr Deutschland (Sommerzeit)
   # cron: '0 16 * * 0'
