@@ -2,36 +2,20 @@ from teams import TEAMS
 import requests
 import re
 import json
-from datetime import datetime, timedelta, date
-
-# =====================================
-# HIER DIE GEWÜNSCHTE KW EINSTELLEN
-# =====================================
-
+from datetime import datetime, date
 import os
 
 KW = int(os.environ["KW"])
 JAHR = int(os.environ["JAHR"])
 
-# =====================================
-
 kw_start = date.fromisocalendar(JAHR, KW, 1)
 kw_ende = date.fromisocalendar(JAHR, KW, 7)
 
-heimspiel_ende = kw_ende + timedelta(days=30)
+ERWACHSENE = ["1. Mannschaft", "2. Mannschaft"]
+JUGEND = ["Jugend I", "Jugend II", "Jugend III"]
 
-print(f"Auswertung KW {KW}")
-print(f"Von: {kw_start}")
-print(f"Bis: {kw_ende}")
 
-report = []
-
-report.append(f"ERGEBNISSE KW {KW}")
-report.append("")
-
-for team_name, url in TEAMS.items():
-
-    report.append(team_name)
+def get_meetings(url):
 
     html = requests.get(url).text
 
@@ -41,19 +25,12 @@ for team_name, url in TEAMS.items():
         re.DOTALL
     )
 
-    if not match:
-        report.append("- Fehler beim Laden")
-        report.append("")
-        continue
-
     data = json.loads(match.group(1))
 
     meetings = None
 
     def find_meetings(obj):
-        nonlocal_meetings = None
-
-        global meetings
+        nonlocal meetings
 
         if meetings:
             return
@@ -73,7 +50,19 @@ for team_name, url in TEAMS.items():
 
     find_meetings(data)
 
-    found_result = False
+    return meetings
+
+
+report = []
+
+report.append(f"ERGEBNISSE KW {KW}")
+report.append("")
+report.append("ERWACHSENE:")
+report.append("")
+
+for team in ERWACHSENE:
+
+    meetings = get_meetings(TEAMS[team])
 
     for day in meetings:
 
@@ -92,59 +81,18 @@ for team_name, url in TEAMS.items():
                 if game["state"] == "done":
 
                     report.append(
-                        f"- {game['team_home']} - "
-                        f"{game['team_away']} "
-                        f"{game['matches_won']}:{game['matches_lost']}"
+                        f'{game["team_home"]} - '
+                        f'{game["team_away"]} '
+                        f'{game["matches_won"]}:{game["matches_lost"]}'
                     )
 
-                    found_result = True
-
-    if not found_result:
-        report.append("- Kein Spiel")
-
-    report.append("")
-
 report.append("")
-report.append("NÄCHSTE HEIMSPIELE")
+report.append("JUGEND:")
 report.append("")
 
-for team_name, url in TEAMS.items():
+for team in JUGEND:
 
-    html = requests.get(url).text
-
-    match = re.search(
-        r'window\.__remixContext\s*=\s*({.*?});',
-        html,
-        re.DOTALL
-    )
-
-    if not match:
-        continue
-
-    data = json.loads(match.group(1))
-
-    meetings = None
-
-    def find_meetings(obj):
-        global meetings
-
-        if meetings:
-            return
-
-        if isinstance(obj, dict):
-            for key, value in obj.items():
-
-                if key == "meetings":
-                    meetings = value
-                    return
-
-                find_meetings(value)
-
-        elif isinstance(obj, list):
-            for item in obj:
-                find_meetings(item)
-
-    find_meetings(data)
+    meetings = get_meetings(TEAMS[team])
 
     for day in meetings:
 
@@ -156,24 +104,117 @@ for team_name, url in TEAMS.items():
             "%Y-%m-%d"
         ).date()
 
-        if kw_ende < match_date <= heimspiel_ende:
+        if kw_start <= match_date <= kw_ende:
 
             for game in games:
 
-                if (
-                    game["state"] == "scheduled"
-                    and "DJK Leutershausen" in game["team_home"]
-                ):
+                if game["state"] == "done":
 
                     report.append(
-                        f"{date_str} | {team_name}"
+                        f'{game["team_home"]} - '
+                        f'{game["team_away"]} '
+                        f'{game["matches_won"]}:{game["matches_lost"]}'
                     )
 
-                    report.append(
-                        f"{game['team_home']} - {game['team_away']}"
-                    )
+report.append("")
+report.append("")
+report.append("NÄCHSTE HEIMSPIELE")
+report.append("")
+report.append("ERWACHSENE:")
+report.append("")
 
-                    report.append("")
+for team in ERWACHSENE:
+
+    meetings = get_meetings(TEAMS[team])
+
+    next_home = None
+
+    for day in meetings:
+
+        date_str = list(day.keys())[0]
+        games = day[date_str]
+
+        for game in games:
+
+            if (
+                game["state"] == "scheduled"
+                and "DJK Leutershausen" in game["team_home"]
+            ):
+                next_home = game
+                break
+
+        if next_home:
+            break
+
+    if next_home:
+
+        dt = datetime.fromisoformat(
+            next_home["date"].replace("Z", "+00:00")
+        )
+
+        report.append(
+            f'{next_home["team_home"]} - {next_home["team_away"]}'
+        )
+
+        report.append(
+            f'AM {dt.strftime("%d.%m")} UM '
+            f'{dt.strftime("%H:%M")} UHR'
+        )
+
+        report.append(
+            f'{next_home["location"]["label"]}, '
+            f'{next_home["location"]["city"]}'
+        )
+
+        report.append("")
+
+report.append("JUGEND:")
+report.append("")
+
+for team in JUGEND:
+
+    meetings = get_meetings(TEAMS[team])
+
+    next_home = None
+
+    for day in meetings:
+
+        date_str = list(day.keys())[0]
+        games = day[date_str]
+
+        for game in games:
+
+            if (
+                game["state"] == "scheduled"
+                and "DJK Leutershausen" in game["team_home"]
+            ):
+                next_home = game
+                break
+
+        if next_home:
+            break
+
+    if next_home:
+
+        dt = datetime.fromisoformat(
+            next_home["date"].replace("Z", "+00:00")
+        )
+
+        report.append(
+            f'{next_home["team_home"]} - {next_home["team_away"]}'
+        )
+
+        report.append(
+            f'AM {dt.strftime("%d.%m")} UM '
+            f'{dt.strftime("%H:%M")} UHR'
+        )
+
+        report.append(
+            f'{next_home["location"]["label"]}, '
+            f'{next_home["location"]["city"]}'
+        )
+
+        report.append("")
 
 with open(
     "instagram_report.txt",
