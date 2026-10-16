@@ -5,7 +5,7 @@ from email.message import EmailMessage
 
 msg = EmailMessage()
 
-msg["Subject"] = "DJK Leutershausen Instagram-Post"
+msg["Subject"] = f"DJK Instagram Post KW {KW}"
 msg["From"] = os.environ["EMAIL_USER"]
 msg["To"] = os.environ["EMAIL_TO"]
 
