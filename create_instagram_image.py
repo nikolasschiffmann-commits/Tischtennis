@@ -4,13 +4,13 @@ img = Image.open("template.png")
 draw = ImageDraw.Draw(img)
 
 font_header = ImageFont.truetype(
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "Gagalin-Regular.otf",
     30
 )
 
 font_text = ImageFont.truetype(
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-    27
+    "Gagalin-Regular.otf",
+    26
 )
 
 with open("instagram_report.txt", "r", encoding="utf-8") as f:
