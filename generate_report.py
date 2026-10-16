@@ -128,22 +128,30 @@ for team in ERWACHSENE:
 
     meetings = get_meetings(TEAMS[team])
 
-    next_home = None
+    home_games = []
 
-    for day in meetings:
+for day in meetings:
 
-        date_str = list(day.keys())[0]
-        games = day[date_str]
+    date_str = list(day.keys())[0]
+    games = day[date_str]
 
-        for game in games:
+    for game in games:
 
-            if (
-                game["state"] == "scheduled"
-                and "DJK Leutershausen" in game["team_home"]
-            ):
-                next_home = game
-                break
+        if (
+            game["state"] == "scheduled"
+            and "DJK Leutershausen" in game["team_home"]
+        ):
+            home_games.append(game)
 
+next_home = None
+
+if home_games:
+
+    home_games.sort(
+        key=lambda x: x["date"]
+    )
+
+    next_home = home_games[0]
         if next_home:
             break
 
@@ -178,24 +186,30 @@ for team in JUGEND:
 
     meetings = get_meetings(TEAMS[team])
 
-    next_home = None
+    home_games = []
 
-    for day in meetings:
+for day in meetings:
 
-        date_str = list(day.keys())[0]
-        games = day[date_str]
+    date_str = list(day.keys())[0]
+    games = day[date_str]
 
-        for game in games:
+    for game in games:
 
-            if (
-                game["state"] == "scheduled"
-                and "DJK Leutershausen" in game["team_home"]
-            ):
-                next_home = game
-                break
+        if (
+            game["state"] == "scheduled"
+            and "DJK Leutershausen" in game["team_home"]
+        ):
+            home_games.append(game)
 
-        if next_home:
-            break
+next_home = None
+
+if home_games:
+
+    home_games.sort(
+        key=lambda x: x["date"]
+    )
+
+    next_home = home_games[0]
 
     if next_home:
 
