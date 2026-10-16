@@ -37,6 +37,16 @@ jobs:
         run: |
           python generate_report.py
 
+      - name: Create Instagram Image
+        run: |
+          python create_instagram_image.py
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-image
+          path: instagram_post.png
+
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
