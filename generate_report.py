@@ -24,6 +24,7 @@ def find_meetings(obj):
 
     if isinstance(obj, dict):
         for key, value in obj.items():
+
             if key == "meetings":
                 meetings = value
                 return
@@ -36,8 +37,17 @@ def find_meetings(obj):
 
 find_meetings(data)
 
-print("ANZAHL SPIELTAGE:", len(meetings))
-
 for day in meetings:
+
     date_str = list(day.keys())[0]
+    matches = day[date_str]
+
+    print("\n-----")
     print(date_str)
+
+    for game in matches:
+
+        print("HOME:", game["team_home"])
+        print("AWAY:", game["team_away"])
+        print("STATE:", game["state"])
+        print("RESULT:", game["matches_won"], ":", game["matches_lost"])
