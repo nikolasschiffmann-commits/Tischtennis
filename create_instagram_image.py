@@ -6,14 +6,14 @@ draw = ImageDraw.Draw(img)
 
 # Ergebnisse Erwachsene
 draw.rectangle(
-    [(140, 620), (940, 860)],
+    [(140, 610), (940, 810)],
     outline="red",
     width=5
 )
 
 # Ergebnisse Jugend
 draw.rectangle(
-    [(140, 880), (940, 1040)],
+    [(140, 830), (940, 1030)],
     outline="green",
     width=5
 )
