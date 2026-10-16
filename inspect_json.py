@@ -17,11 +17,16 @@ data = json.loads(match.group(1))
 def find_meetings(obj):
     if isinstance(obj, dict):
         for key, value in obj.items():
-            if key == "meetings":
-                print("\nANZAHL SPIELE:", len(value))
 
-                print("\nERSTES SPIEL:")
+            if key == "meetings":
+
+                print("ANZAHL SPIELE:", len(value))
+
+                print("\nLETZTES SPIEL:")
                 print(json.dumps(value[0], indent=2, ensure_ascii=False))
+
+                print("\nNÄCHSTES SPIEL:")
+                print(json.dumps(value[-1], indent=2, ensure_ascii=False))
 
                 return True
 
