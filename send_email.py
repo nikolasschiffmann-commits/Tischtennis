@@ -1,4 +1,11 @@
 import os
+from datetime import date
+
+if os.environ.get("KW"):
+    kw = os.environ["KW"]
+else:
+    kw = str(date.today().isocalendar().week)
+
 import smtplib
 
 from email.message import EmailMessage
