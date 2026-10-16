@@ -20,12 +20,10 @@ jobs:
         run: |
           pip install requests beautifulsoup4
 
-      - name: Run Inspection
+      - name: Create remix.json
+        run: |
+          python report.py
+
+      - name: Inspect JSON
         run: |
           python inspect_json.py
-      
-      - name: Upload JSON
-        uses: actions/upload-artifact@v4
-        with:
-          name: remix-json
-          path: remix.json
