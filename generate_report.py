@@ -3,6 +3,7 @@ import requests
 import re
 import json
 from datetime import datetime, date
+from zoneinfo import ZoneInfo
 import os
 
 KW = int(os.environ["KW"])
@@ -149,8 +150,10 @@ for team in ERWACHSENE:
     if next_home:
 
         dt = datetime.fromisoformat(
-            next_home["date"].replace("Z", "+00:00")
-        )
+    next_home["date"]
+).astimezone(
+    ZoneInfo("Europe/Berlin")
+)
 
         report.append(
             f'{next_home["team_home"]} - {next_home["team_away"]}'
@@ -197,8 +200,10 @@ for team in JUGEND:
     if next_home:
 
         dt = datetime.fromisoformat(
-            next_home["date"].replace("Z", "+00:00")
-        )
+    next_home["date"]
+).astimezone(
+    ZoneInfo("Europe/Berlin")
+)
 
         report.append(
             f'{next_home["team_home"]} - {next_home["team_away"]}'
