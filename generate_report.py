@@ -2,24 +2,29 @@ from teams import TEAMS
 import requests
 import re
 import json
+from datetime import datetime, timedelta, date
+
+# =====================================
+# HIER DIE GEWÜNSCHTE KW EINSTELLEN
+# =====================================
 
 KW = 41
 JAHR = 2026
 
-from datetime import datetime, timedelta, date
+# =====================================
 
 kw_start = date.fromisocalendar(JAHR, KW, 1)
 kw_ende = date.fromisocalendar(JAHR, KW, 7)
 
-next_30_days = kw_ende + timedelta(days=30)
+heimspiel_ende = kw_ende + timedelta(days=30)
 
-print(f"KW {KW}")
+print(f"Auswertung KW {KW}")
 print(f"Von: {kw_start}")
 print(f"Bis: {kw_ende}")
 
 report = []
 
-report.append("ERGEBNISSE LETZTE WOCHE")
+report.append(f"ERGEBNISSE KW {KW}")
 report.append("")
 
 for team_name, url in TEAMS.items():
@@ -34,12 +39,17 @@ for team_name, url in TEAMS.items():
         re.DOTALL
     )
 
+    if not match:
+        report.append("- Fehler beim Laden")
+        report.append("")
+        continue
+
     data = json.loads(match.group(1))
 
     meetings = None
 
     def find_meetings(obj):
-        nonlocal_meetings = False
+        nonlocal_meetings = None
 
         global meetings
 
@@ -68,16 +78,20 @@ for team_name, url in TEAMS.items():
         date_str = list(day.keys())[0]
         games = day[date_str]
 
-        match_date = datetime.strptime(date_str, "%Y-%m-%d")
+        match_date = datetime.strptime(
+            date_str,
+            "%Y-%m-%d"
+        ).date()
 
-        if last_week <= match_date <= today:
+        if kw_start <= match_date <= kw_ende:
 
             for game in games:
 
                 if game["state"] == "done":
 
                     report.append(
-                        f"- {game['team_home']} - {game['team_away']} "
+                        f"- {game['team_home']} - "
+                        f"{game['team_away']} "
                         f"{game['matches_won']}:{game['matches_lost']}"
                     )
 
@@ -101,6 +115,9 @@ for team_name, url in TEAMS.items():
         html,
         re.DOTALL
     )
+
+    if not match:
+        continue
 
     data = json.loads(match.group(1))
 
@@ -132,9 +149,12 @@ for team_name, url in TEAMS.items():
         date_str = list(day.keys())[0]
         games = day[date_str]
 
-        match_date = datetime.strptime(date_str, "%Y-%m-%d")
+        match_date = datetime.strptime(
+            date_str,
+            "%Y-%m-%d"
+        ).date()
 
-        if today <= match_date <= next_30_days:
+        if kw_ende < match_date <= heimspiel_ende:
 
             for game in games:
 
@@ -161,3 +181,4 @@ with open(
     f.write("\n".join(report))
 
 print("instagram_report.txt erstellt")
+``
