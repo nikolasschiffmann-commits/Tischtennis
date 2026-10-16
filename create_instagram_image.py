@@ -7,7 +7,7 @@ draw = ImageDraw.Draw(img)
 # Standardschrift verwenden
 font = ImageFont.truetype(
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-    40
+    28
 )
 
 text = "DJK Leutershausen - Heimatverein Burglauer 10:0"
