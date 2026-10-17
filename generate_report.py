@@ -6,19 +6,10 @@ from datetime import datetime, date
 from zoneinfo import ZoneInfo
 import os
 
-from datetime import date
 
 if os.environ.get("KW"):
-    from datetime import date
-    import os
-
-    if os.environ.get("KW"):
-        KW = int(os.environ["KW"])
-        JAHR = int(os.environ["JAHR"])
-    else:
-        heute = date.today()
-        KW = heute.isocalendar().week
-        JAHR = heute.year
+    KW = int(os.environ["KW"])
+    JAHR = int(os.environ["JAHR"])
 else:
     heute = date.today()
     KW = heute.isocalendar().week
