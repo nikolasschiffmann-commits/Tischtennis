@@ -14,9 +14,7 @@ msg = EmailMessage()
 
 msg["Subject"] = f"DJK Instagram Post KW {kw}"
 msg["From"] = os.environ["EMAIL_USER"]
-msg["To"] = (
-    "nikolasschiffmann@gmail.com, "
-    "Nico-Bader@web.de"
+msg["To"] = os.environ["EMAIL_TO"]
 )
 
 msg.set_content(
@@ -43,6 +41,14 @@ with smtplib.SMTP_SSL(
         os.environ["EMAIL_PASSWORD"]
     )
 
-    smtp.send_message(msg)
+    recipients = [
+    email.strip()
+    for email in os.environ["EMAIL_TO"].split(",")
+]
+
+smtp.send_message(
+    msg,
+    to_addrs=recipients
+)
 
 print(f"E-Mail für KW {kw} erfolgreich versendet")
