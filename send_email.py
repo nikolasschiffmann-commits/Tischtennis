@@ -15,7 +15,6 @@ msg = EmailMessage()
 msg["Subject"] = f"DJK Instagram Post KW {kw}"
 msg["From"] = os.environ["EMAIL_USER"]
 msg["To"] = os.environ["EMAIL_TO"]
-)
 
 msg.set_content(
     f"Der automatisch erzeugte Instagram-Post für KW {kw} befindet sich im Anhang."
@@ -31,6 +30,11 @@ msg.add_attachment(
     filename=f"instagram_post_KW{kw}.png"
 )
 
+recipients = [
+    email.strip()
+    for email in os.environ["EMAIL_TO"].split(",")
+]
+
 with smtplib.SMTP_SSL(
     "smtp.gmail.com",
     465
@@ -41,14 +45,9 @@ with smtplib.SMTP_SSL(
         os.environ["EMAIL_PASSWORD"]
     )
 
-    recipients = [
-    email.strip()
-    for email in os.environ["EMAIL_TO"].split(",")
-]
-
-smtp.send_message(
-    msg,
-    to_addrs=recipients
-)
+    smtp.send_message(
+        msg,
+        to_addrs=recipients
+    )
 
 print(f"E-Mail für KW {kw} erfolgreich versendet")
