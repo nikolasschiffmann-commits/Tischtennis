@@ -6,14 +6,14 @@ draw = ImageDraw.Draw(img)
 
 # Gegnername
 draw.rectangle(
-    [(120, 730), (960, 860)],
+    [(100, 710), (910, 880)],
     outline="red",
     width=5
 )
 
 # Spielinfos auf dem Schläger
 draw.rectangle(
-    [(320, 1030), (760, 1370)],
+    [(420, 1010), (860, 1370)],
     outline="yellow",
     width=5
 )
