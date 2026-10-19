@@ -31,6 +31,10 @@ def get_meetings(url):
         html,
         re.DOTALL
     )
+    if not match:
+    raise Exception(
+        f"__remixContext nicht gefunden: {url}"
+    )
 
     data = json.loads(match.group(1))
 
