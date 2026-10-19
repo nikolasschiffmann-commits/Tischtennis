@@ -162,9 +162,14 @@ for team in ERWACHSENE:
 
         for game in games:
 
+            match_day = datetime.fromisoformat(
+                game["date"]
+            ).date()
+
             if (
                 game["state"] == "scheduled"
                 and "DJK Leutershausen" in game["team_home"]
+                and match_day > kw_ende
             ):
                 home_games.append(game)
 
@@ -226,9 +231,14 @@ for team in JUGEND:
 
         for game in games:
 
+            match_day = datetime.fromisoformat(
+                game["date"]
+            ).date()
+
             if (
                 game["state"] == "scheduled"
                 and "DJK Leutershausen" in game["team_home"]
+                and match_day > kw_ende
             ):
                 home_games.append(game)
 
