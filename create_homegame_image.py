@@ -5,33 +5,42 @@ draw = ImageDraw.Draw(img)
 
 font_opponent = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    42
+    50
 )
 
 font_info = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    28
+    34
 )
 
 # Gegnername
-opponent = "TSV BAD KÖNIGSHOFEN"
+opponent_lines = [
+    "VS",
+    "TSV BAD KÖNIGSHOFEN"
+]
 
-bbox = draw.textbbox(
-    (0, 0),
-    opponent,
-    font=font_opponent
-)
+y = 730
 
-text_width = bbox[2] - bbox[0]
+for line in opponent_lines:
 
-x = (1080 - text_width) / 2
+    bbox = draw.textbbox(
+        (0, 0),
+        line,
+        font=font_opponent
+    )
 
-draw.text(
-    (x, 760),
-    opponent,
-    fill="white",
-    font=font_opponent
-)
+    width = bbox[2] - bbox[0]
+
+    x = 540 - width / 2
+
+    draw.text(
+        (x, y),
+        line,
+        fill="white",
+        font=font_opponent
+    )
+
+    y += 75
 
 # Schlägertext
 
@@ -42,7 +51,7 @@ info_lines = [
     "HOHENROTH"
 ]
 
-y = 1080
+y = 1110
 
 for line in info_lines:
 
@@ -63,7 +72,7 @@ for line in info_lines:
         font=font_info
     )
 
-    y += 60
+    y += 70
 
 img.save("homegame_test.png")
 
