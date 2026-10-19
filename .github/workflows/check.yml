@@ -45,6 +45,10 @@ jobs:
         run: |
           python generate_report.py
 
+      - name: Generate Homegame Data
+        run: |
+          python generate_homegame_data.py
+
       - name: Create Instagram Image
         run: |
           python create_instagram_image.py
