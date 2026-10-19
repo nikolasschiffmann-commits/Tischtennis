@@ -69,8 +69,38 @@ home_games.sort(
 
 next_home = home_games[0]
 
-print("Nächstes Heimspiel gefunden:")
-print("Heim:", next_home["team_home"])
-print("Gast:", next_home["team_away"])
-print("Datum:", next_home["date"])
-print("Ort:", next_home["location"]["city"])
+dt = datetime.fromisoformat(
+    next_home["date"]
+)
+
+wochentage = {
+    "Monday": "MONTAG",
+    "Tuesday": "DIENSTAG",
+    "Wednesday": "MITTWOCH",
+    "Thursday": "DONNERSTAG",
+    "Friday": "FREITAG",
+    "Saturday": "SAMSTAG",
+    "Sunday": "SONNTAG"
+}
+
+homegame = {
+    "gegner": next_home["team_away"],
+    "wochentag": wochentage[dt.strftime("%A")],
+    "datum": dt.strftime("%d.%m.%Y"),
+    "uhrzeit": dt.strftime("%H:%M UHR"),
+    "ort": next_home["location"]["city"].upper()
+}
+
+with open(
+    "homegame.json",
+    "w",
+    encoding="utf-8"
+) as f:
+    json.dump(
+        homegame,
+        f,
+        ensure_ascii=False,
+        indent=2
+    )
+
+print("homegame.json erstellt")
