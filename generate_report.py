@@ -147,6 +147,8 @@ report.append("")
 report.append("ERWACHSENE:")
 report.append("")
 
+adult_home_found = False
+
 for team in ERWACHSENE:
 
     meetings = get_meetings(TEAMS[team])
@@ -178,6 +180,8 @@ for team in ERWACHSENE:
 
     if next_home:
 
+        adult_home_found = True
+        
         dt = datetime.fromisoformat(
             next_home["date"]
         ).astimezone(
@@ -197,8 +201,17 @@ for team in ERWACHSENE:
       
         report.append("")
 
+if not adult_home_found:
+    report.append(
+        "Aktuell keine Heimspiele geplant"
+    )
+
+report.append("")
+
 report.append("JUGEND:")
 report.append("")
+
+youth_home_found = False
 
 for team in JUGEND:
 
@@ -231,6 +244,8 @@ for team in JUGEND:
 
     if next_home:
 
+        youth_home_found = True
+        
         dt = datetime.fromisoformat(
             next_home["date"]
         ).astimezone(
@@ -248,6 +263,11 @@ for team in JUGEND:
         )
 
         report.append("")
+
+if not youth_home_found:
+    report.append(
+        "Aktuell keine Heimspiele geplant"
+    )
 
 with open(
     "instagram_report.txt",
