@@ -47,7 +47,7 @@ jobs:
           
       - name: Generate Homegame Data
         run: |
-        python generate_homegame_data.py
+          python generate_homegame_data.py
 
       - name: Create Instagram Image
         run: |
