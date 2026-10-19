@@ -19,5 +19,5 @@ draw.rectangle(
 )
 
 img.save("homegame_test.png")
-
+img.show()
 print("Testbild erzeugt")
