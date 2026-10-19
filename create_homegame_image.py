@@ -63,7 +63,7 @@ for line in info_lines:
 
     width = bbox[2] - bbox[0]
 
-    x = 630 - width / 2
+    x = 640 - width / 2
 
     draw.text(
         (x, y),
