@@ -215,4 +215,112 @@ for team in ERWACHSENE:
 
     if next_home:
 
-        adult_home_found = 
+        adult_home_found = True
+
+        dt = datetime.fromisoformat(
+            next_home["date"]
+        ).astimezone(
+            ZoneInfo("Europe/Berlin")
+        )
+
+        report.append(
+            f'{next_home["team_home"]} - {next_home["team_away"]}'
+        )
+
+        report.append(
+            f'AM {dt.strftime("%d.%m")} UM '
+            f'{dt.strftime("%H:%M")} UHR IN '
+            f'{next_home["location"]["city"].upper()}'
+        )
+
+        report.append("")
+
+if not adult_home_found:
+
+    report.append(
+        "Aktuell keine Heimspiele geplant"
+    )
+
+report.append("")
+report.append("JUGEND:")
+report.append("")
+
+youth_home_found = False
+
+for team in JUGEND:
+
+    print(f"Lade Heimspiele Team: {team}")
+
+    meetings = get_meetings(TEAMS[team])
+
+    if meetings is None:
+        raise Exception(
+            f"Keine Meetings gefunden für {team}"
+        )
+
+    home_games = []
+
+    for day in meetings:
+
+        date_str = list(day.keys())[0]
+        games = day[date_str]
+
+        for game in games:
+
+            match_day = datetime.fromisoformat(
+                game["date"]
+            ).date()
+
+            if (
+                game["state"] == "scheduled"
+                and "DJK Leutershausen" in game["team_home"]
+                and match_day > kw_ende
+            ):
+                home_games.append(game)
+
+    next_home = None
+
+    if home_games:
+
+        home_games.sort(
+            key=lambda x: x["date"]
+        )
+
+        next_home = home_games[0]
+
+    if next_home:
+
+        youth_home_found = True
+
+        dt = datetime.fromisoformat(
+            next_home["date"]
+        ).astimezone(
+            ZoneInfo("Europe/Berlin")
+        )
+
+        report.append(
+            f'{next_home["team_home"]} - {next_home["team_away"]}'
+        )
+
+        report.append(
+            f'AM {dt.strftime("%d.%m")} UM '
+            f'{dt.strftime("%H:%M")} UHR IN '
+            f'{next_home["location"]["city"].upper()}'
+        )
+
+        report.append("")
+
+if not youth_home_found:
+
+    report.append(
+        "Aktuell keine Heimspiele geplant"
+    )
+
+with open(
+    "instagram_report.txt",
+    "w",
+    encoding="utf-8"
+) as f:
+    f.write("\n".join(report))
+
+print("instagram_report.txt erstellt")
