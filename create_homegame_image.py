@@ -10,7 +10,7 @@ font_opponent = ImageFont.truetype(
 
 font_info = ImageFont.truetype(
     "Gagalin-Regular.otf",
-    50
+    65
 )
 
 # Gegnername
@@ -51,7 +51,7 @@ info_lines = [
     "HOHENROTH"
 ]
 
-y = 1070
+y = 1020
 
 for line in info_lines:
 
@@ -63,7 +63,7 @@ for line in info_lines:
 
     width = bbox[2] - bbox[0]
 
-    x = 540 - width / 2
+    x = 570 - width / 2
 
     draw.text(
         (x, y),
