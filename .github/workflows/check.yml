@@ -19,7 +19,7 @@ on:
       send_mail:
         description: 'Mail versenden (yes/no)'
         required: true
-        default: 'yes'  
+        default: 'no'  
 
 jobs:
   report:
