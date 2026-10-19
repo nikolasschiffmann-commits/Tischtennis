@@ -49,6 +49,16 @@ jobs:
         run: |
           python create_instagram_image.py
 
+       - name: Create Homegame Test Image
+       run: |
+          python create_homegame_image.py
+
+      - name: Upload Homegame Test
+        uses: actions/upload-artifact@v4
+        with:
+          name: homegame-test
+          path: homegame_test.png
+
       - name: Send Email
         if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
         env:
