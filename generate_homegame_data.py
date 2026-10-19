@@ -38,4 +38,4 @@ def get_meetings(url):
 
                 find_meetings(value)
 
-        elif isinstance(obj, list
+        elif isinstance(obj, list)
