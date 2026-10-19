@@ -16,6 +16,11 @@ on:
         required: true
         default: '2026'
 
+      send_mail:
+        description: 'Mail versenden (yes/no)'
+        required: true
+        default: 'yes'  
+
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -44,15 +49,16 @@ jobs:
         run: |
           python create_instagram_image.py
 
-      #- name: Send Email
-      #  env:
-      #    EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      #    EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-      #    EMAIL_TO: ${{ secrets.EMAIL_TO }}
-      #    KW: ${{ github.event.inputs.kw || '' }}
-      #   JAHR: ${{ github.event.inputs.jahr || '' }}
-      #  run: |
-      #    python send_email.py
+      - name: Send Email
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          KW: ${{ github.event.inputs.kw || '' }}
+          JAHR: ${{ github.event.inputs.jahr || '' }}
+        run: |
+          python send_email.py
 
       - name: Upload Image
         uses: actions/upload-artifact@v4
