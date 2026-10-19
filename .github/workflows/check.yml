@@ -50,8 +50,8 @@ jobs:
           python create_instagram_image.py
 
       - name: Create Homegame Test Image
-          run: |
-          python create_homegame_image.py
+        run: |
+            python create_homegame_image.py
 
       - name: Upload Homegame Test
         uses: actions/upload-artifact@v4
