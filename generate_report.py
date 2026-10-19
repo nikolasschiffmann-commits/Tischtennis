@@ -67,6 +67,8 @@ report.append("")
 report.append("ERWACHSENE:")
 report.append("")
 
+adult_results_found = False
+
 for team in ERWACHSENE:
 
     meetings = get_meetings(TEAMS[team])
@@ -92,10 +94,19 @@ for team in ERWACHSENE:
                         f'{game["team_away"]} '
                         f'{game["matches_won"]}:{game["matches_lost"]}'
                     )
+                    
+                    adult_results_found = True
+
+if not adult_results_found:
+    report.append(
+        "Keine Spiele in dieser Woche"
+    )
 
 report.append("")
 report.append("JUGEND:")
 report.append("")
+
+youth_results_found = False
 
 for team in JUGEND:
 
@@ -122,6 +133,12 @@ for team in JUGEND:
                         f'{game["team_away"]} '
                         f'{game["matches_won"]}:{game["matches_lost"]}'
                     )
+                    youth_results_found = True
+
+if not youth_results_found:
+    report.append(
+        "Keine Spiele in dieser Woche"
+    )
 
 report.append("")
 report.append("")
