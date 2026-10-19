@@ -71,7 +71,14 @@ adult_results_found = False
 
 for team in ERWACHSENE:
 
+    print(f"Lade Team: {team}")
+
     meetings = get_meetings(TEAMS[team])
+
+    if meetings is None:
+        raise Exception(
+            f"Keine Meetings gefunden für {team}"
+        )
 
     for day in meetings:
 
@@ -149,9 +156,16 @@ report.append("")
 
 adult_home_found = False
 
-for team in ERWACHSENE:
+for team in JUGEND:
+
+    print(f"Lade Team: {team}")
 
     meetings = get_meetings(TEAMS[team])
+
+    if meetings is None:
+        raise Exception(
+            f"Keine Meetings gefunden für {team}"
+        )
 
     home_games = []
 
