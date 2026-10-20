@@ -68,8 +68,8 @@ jobs:
       - name: Upload Homegame Test
         uses: actions/upload-artifact@v4
         with:
-          name: homegame-test
-          path: homegame_test.png
+          name: homegame-post
+          path: homegame_post.png
 
       - name: Send Email
         if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
