@@ -1,7 +1,15 @@
+import json
 from PIL import Image, ImageDraw, ImageFont
 
 img = Image.open("template_heimspiel.png")
 draw = ImageDraw.Draw(img)
+
+with open(
+    "homegame.json",
+    "r",
+    encoding="utf-8"
+) as f:
+    homegame = json.load(f)
 
 font_opponent = ImageFont.truetype(
     "Gagalin-Regular.otf",
@@ -14,9 +22,10 @@ font_info = ImageFont.truetype(
 )
 
 # Gegnername
+
 opponent_lines = [
     "VS",
-    "TSV BAD KÖNIGSHOFEN"
+    homegame["gegner"].upper()
 ]
 
 y = 680
@@ -45,10 +54,10 @@ for line in opponent_lines:
 # Schlägertext
 
 info_lines = [
-    "FREITAG",
-    "23.10.2026",
-    "19:00 UHR",
-    "HOHENROTH"
+    homegame["wochentag"],
+    homegame["datum"],
+    homegame["uhrzeit"],
+    homegame["ort"]
 ]
 
 y = 990
@@ -76,4 +85,4 @@ for line in info_lines:
 
 img.save("homegame_test.png")
 
-print("Testbild erzeugt")
+print("homegame_test.png erstellt")
