@@ -1,5 +1,10 @@
+import os
 import json
 from PIL import Image, ImageDraw, ImageFont
+
+if not os.path.exists("homegame.json"):
+    print("Kein Heimspiel in 2 Tagen gefunden.")
+    quit()
 
 img = Image.open("template_heimspiel.png")
 draw = ImageDraw.Draw(img)
