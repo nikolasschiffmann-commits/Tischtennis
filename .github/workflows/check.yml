@@ -57,6 +57,14 @@ jobs:
         run: |
             python create_homegame_image.py
 
+      - name: Send Homegame Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          python send_homegame_email.py
+
       - name: Upload Homegame Test
         uses: actions/upload-artifact@v4
         with:
