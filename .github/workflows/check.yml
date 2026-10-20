@@ -44,32 +44,10 @@ jobs:
           JAHR: ${{ github.event.inputs.jahr || '' }}
         run: |
           python generate_report.py
-          
-      - name: Generate Homegame Data
-        run: |
-          python generate_homegame_data.py
 
       - name: Create Instagram Image
         run: |
           python create_instagram_image.py
-
-      - name: Create Homegame Test Image
-        run: |
-            python create_homegame_image.py
-
-      - name: Send Homegame Email
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-        run: |
-          python send_homegame_email.py
-
-      - name: Upload Homegame Test
-        uses: actions/upload-artifact@v4
-        with:
-          name: homegame-post
-          path: homegame_post.png
 
       - name: Send Email
         if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
