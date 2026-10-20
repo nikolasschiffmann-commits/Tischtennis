@@ -84,6 +84,21 @@ dt = datetime.fromisoformat(
     next_home["date"]
 )
 
+today = datetime.now().date()
+
+game_date = dt.date()
+
+days_until_game = (
+    game_date - today
+).days
+
+if days_until_game != 2:
+    print(
+        f"Kein Heimspiel in 2 Tagen. "
+        f"Nächstes Heimspiel in {days_until_game} Tagen."
+    )
+    quit()
+
 wochentage = {
     "Monday": "MONTAG",
     "Tuesday": "DIENSTAG",
