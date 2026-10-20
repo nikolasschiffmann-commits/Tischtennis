@@ -92,7 +92,7 @@ days_until_game = (
     game_date - today
 ).days
 
-if days_until_game != 2:
+if days_until_game != 24:
     print(
         f"Kein Heimspiel in 2 Tagen. "
         f"Nächstes Heimspiel in {days_until_game} Tagen."
