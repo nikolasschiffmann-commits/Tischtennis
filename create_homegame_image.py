@@ -88,6 +88,6 @@ for line in info_lines:
 
     y += 85
 
-img.save("homegame_test.png")
+img.save("homegame_post.png")
 
-print("homegame_test.png erstellt")
+print("homegame_post.png erstellt")
