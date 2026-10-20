@@ -28,6 +28,10 @@ jobs:
         run: |
           python generate_homegame_data.py
 
+      - name: Generate Upcoming Homegames
+        run: |
+          python generate_upcoming_homegames.py
+
       - name: Create Homegame Image
         run: |
           python create_homegame_image.py
