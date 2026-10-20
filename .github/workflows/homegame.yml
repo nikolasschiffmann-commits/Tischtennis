@@ -1,0 +1,49 @@
+name: TT Homegame Bot
+
+on:
+  schedule:
+    # Täglich 09:00 Uhr Deutschland (Sommerzeit)
+    - cron: '0 7 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  homegame:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install requests pillow
+
+      - name: Generate Homegame Data
+        run: |
+          python generate_homegame_data.py
+
+      - name: Create Homegame Image
+        run: |
+          python create_homegame_image.py
+
+      - name: Send Homegame Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          python send_homegame_email.py
+
+      - name: Upload Homegame Image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homegame-post
+          path: homegame_post.png
+          if-no-files-found: ignore
