@@ -2,6 +2,7 @@ from teams import TEAMS
 import requests
 import re
 import json
+from datetime import datetime
 
 URL = TEAMS["1. Mannschaft"]
 
@@ -15,6 +16,11 @@ def get_meetings(url):
         html,
         re.DOTALL
     )
+
+    if not match:
+        raise Exception(
+            f"__remixContext nicht gefunden: {url}"
+        )
 
     data = json.loads(match.group(1))
 
@@ -63,6 +69,11 @@ for day in meetings:
         ):
             home_games.append(game)
 
+if not home_games:
+    raise Exception(
+        "Kein zukünftiges Heimspiel gefunden"
+    )
+
 home_games.sort(
     key=lambda x: x["date"]
 )
@@ -104,3 +115,4 @@ with open(
     )
 
 print("homegame.json erstellt")
+print(homegame)
