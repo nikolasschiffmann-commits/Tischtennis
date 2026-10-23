@@ -77,6 +77,43 @@ fetch("teams.json")
     );
 });
 
+fetch("upcoming_homegames.json")
+.then(response => response.json())
+.then(data => {
+
+    let html = "";
+
+    data.forEach(game => {
+
+        html += `
+            <div style="
+                border:1px solid #ddd;
+                padding:15px;
+                margin-bottom:10px;
+                border-radius:10px;
+                background:#f8f8f8;
+            ">
+
+                <h3 style="margin:0;">
+                    ${game.mannschaft}
+                </h3>
+
+                <p>
+                    <strong>${game.gegner}</strong><br>
+                    ${game.datum}<br>
+                    ${game.uhrzeit} Uhr<br>
+                    ${game.ort}
+                </p>
+
+            </div>
+        `;
+    });
+
+    document.getElementById(
+        "homegames"
+    ).innerHTML = html;
+});
+
 </script>
 
 </body>
