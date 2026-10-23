@@ -77,20 +77,27 @@ for team_name, url in TEAMS.items():
             ):
                 home_games.append(game)
 
-    for game in home_games:
-        dt = datetime.fromisoformat(
-            game["date"]
-        ).astimezone(
-            ZoneInfo("Europe/Berlin")
-        )
+    if not home_games:
+        continue
 
-        upcoming_homegames.append({
-            "mannschaft": team_name,
-            "gegner": game["team_away"],
-            "datum": dt.strftime("%d.%m.%Y"),
-            "uhrzeit": dt.strftime("%H:%M"),
-            "ort": game["location"]["city"]
-        })
+    next_home = min(
+        home_games,
+        key=lambda game: game["date"]
+    )
+
+    dt = datetime.fromisoformat(
+        next_home["date"]
+    ).astimezone(
+        ZoneInfo("Europe/Berlin")
+    )
+
+    upcoming_homegames.append({
+        "mannschaft": team_name,
+        "gegner": next_home["team_away"],
+        "datum": dt.strftime("%d.%m.%Y"),
+        "uhrzeit": dt.strftime("%H:%M"),
+        "ort": next_home["location"]["city"]
+    })
 
 upcoming_homegames.sort(
     key=lambda game: datetime.strptime(

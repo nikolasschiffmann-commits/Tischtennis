@@ -21,6 +21,9 @@ on:
         required: true
         default: 'no'  
 
+permissions:
+  contents: write
+
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -65,6 +68,14 @@ jobs:
         with:
           name: instagram-image
           path: instagram_post.png
+
+      - name: Commit updated Instagram image
+        run: |
+          git config --global user.name "TT Bot"
+          git config --global user.email "ttbot@github.local"
+          git add instagram_post.png
+          git diff --staged --quiet || git commit -m "Update Instagram image"
+          git push
 
       - name: Upload Report
         uses: actions/upload-artifact@v4

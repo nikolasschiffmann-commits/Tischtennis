@@ -16,6 +16,29 @@
             color:#00576e;
         }
 
+        .latest-images{
+            display:grid;
+            grid-template-columns:repeat(2, minmax(0, 1fr));
+            gap:16px;
+            margin:24px 0;
+        }
+
+        .latest-images figure{
+            margin:0;
+        }
+
+        .latest-images img{
+            display:block;
+            width:100%;
+            height:auto;
+            border:1px solid #ddd;
+        }
+
+        .latest-images figcaption{
+            margin-top:8px;
+            font-weight:bold;
+        }
+
         table{
             width:100%;
             border-collapse:collapse;
@@ -30,11 +53,70 @@
             background:#00576e;
             color:white;
         }
+
+        input[type="url"]{
+            box-sizing:border-box;
+            width:100%;
+            min-width:260px;
+            padding:8px;
+        }
+
+        .team-actions{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-top:12px;
+        }
+
+        button{
+            padding:9px 12px;
+            cursor:pointer;
+        }
+
+        #teamsStatus{
+            min-height:1.5em;
+        }
+
+        @media (max-width:640px){
+            body{
+                padding:16px;
+            }
+
+            .latest-images{
+                grid-template-columns:1fr;
+            }
+
+            table{
+                font-size:14px;
+            }
+
+            th,td{
+                padding:6px;
+            }
+
+            input[type="url"]{
+                min-width:180px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <h1>🏓 TT Bot Manager</h1>
+
+<section id="latest-images">
+    <h2>Aktuelle Grafiken</h2>
+    <div class="latest-images">
+        <figure>
+            <img data-latest-image="homegame_post.png" alt="Aktuelle Heimspiel-Grafik">
+            <figcaption>Heimspiel</figcaption>
+        </figure>
+        <figure>
+            <img data-latest-image="instagram_post.png" alt="Aktuelle Instagram-Grafik">
+            <figcaption>Instagram</figcaption>
+        </figure>
+    </div>
+</section>
 
 <p>Verwaltung der Click-TT Mannschaftslinks</p>
 
@@ -43,44 +125,162 @@
 
 <h2>Mannschaften</h2>
 
-<table id="teamsTable">
-    <thead>
-        <tr>
-            <th>Mannschaft</th>
-            <th>Link</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<form id="teamsForm">
+    <table id="teamsTable">
+        <thead>
+            <tr>
+                <th>Mannschaft</th>
+                <th>Click-TT URL</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="team-actions">
+        <button type="submit">Links im Browser speichern</button>
+        <button type="button" id="downloadTeams">teams.json herunterladen</button>
+        <button type="button" id="resetTeams">Änderungen zurücksetzen</button>
+    </div>
+    <p id="teamsStatus" role="status" aria-live="polite"></p>
+</form>
 
 <script>
 
-fetch("teams.json")
-.then(response => response.json())
-.then(data => {
+const latestImages = [...document.querySelectorAll("[data-latest-image]")];
+const imageVersion = Date.now();
 
-    const tbody =
-        document.querySelector("#teamsTable tbody");
+latestImages.forEach(image => {
+    const figure = image.closest("figure");
 
-    Object.entries(data).forEach(
-        ([team,url]) => {
+    image.addEventListener("error", () => {
+        figure.hidden = true;
 
-            const row =
-                document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${team}</td>
-                <td>
-                    <a href="${url}" target="_blank">
-                        Öffnen
-                    </a>
-                </td>
-            `;
-
-            tbody.appendChild(row);
+        if (latestImages.every(item => item.closest("figure").hidden)) {
+            document.getElementById("latest-images").hidden = true;
         }
-    );
+    }, { once: true });
+
+    image.src = `${image.dataset.latestImage}?v=${imageVersion}`;
 });
+
+const teamsForm = document.getElementById("teamsForm");
+const teamsStatus = document.getElementById("teamsStatus");
+let currentTeams = {};
+
+function renderTeams(teams){
+    const tbody = document.querySelector("#teamsTable tbody");
+    tbody.replaceChildren();
+
+    Object.entries(teams).forEach(([team, url]) => {
+        const row = document.createElement("tr");
+        const nameCell = document.createElement("td");
+        const urlCell = document.createElement("td");
+        const linkCell = document.createElement("td");
+        const input = document.createElement("input");
+        const link = document.createElement("a");
+
+        nameCell.textContent = team;
+        input.type = "url";
+        input.name = team;
+        input.value = url;
+        input.required = true;
+        input.setAttribute("aria-label", `Click-TT URL für ${team}`);
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Öffnen";
+
+        urlCell.appendChild(input);
+        linkCell.appendChild(link);
+        row.append(nameCell, urlCell, linkCell);
+        tbody.appendChild(row);
+    });
+}
+
+function readTeamsFromForm(){
+    const teams = Object.fromEntries(new FormData(teamsForm));
+
+    for (const url of Object.values(teams)){
+        const protocol = new URL(url).protocol;
+
+        if (protocol !== "http:" && protocol !== "https:"){
+            throw new Error("Bitte nur HTTP- oder HTTPS-Links verwenden.");
+        }
+    }
+
+    return teams;
+}
+
+function saveTeams(teams){
+    localStorage.setItem("teamLinks", JSON.stringify(teams));
+    currentTeams = teams;
+    renderTeams(currentTeams);
+}
+
+teamsForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    try{
+        saveTeams(readTeamsFromForm());
+        teamsStatus.textContent = "Links in diesem Browser gespeichert.";
+    }catch(error){
+        teamsStatus.textContent = error.message;
+    }
+});
+
+document.getElementById("downloadTeams").addEventListener("click", () => {
+    if (!teamsForm.reportValidity()){
+        return;
+    }
+
+    try{
+        const teams = readTeamsFromForm();
+        saveTeams(teams);
+        const file = new Blob(
+            [JSON.stringify(teams, null, 2)],
+            { type: "application/json" }
+        );
+        const downloadUrl = URL.createObjectURL(file);
+        const downloadLink = document.createElement("a");
+
+        downloadLink.href = downloadUrl;
+        downloadLink.download = "teams.json";
+        downloadLink.click();
+        URL.revokeObjectURL(downloadUrl);
+        teamsStatus.textContent = "Aktuelle Links als teams.json heruntergeladen.";
+    }catch(error){
+        teamsStatus.textContent = error.message;
+    }
+});
+
+document.getElementById("resetTeams").addEventListener("click", () => {
+    localStorage.removeItem("teamLinks");
+    window.location.reload();
+});
+
+fetch("teams.json")
+    .then(response => {
+        if (!response.ok){
+            throw new Error("teams.json konnte nicht geladen werden.");
+        }
+
+        return response.json();
+    })
+    .then(teams => {
+        const savedTeams = JSON.parse(localStorage.getItem("teamLinks") || "{}");
+
+        for (const team of Object.keys(teams)){
+            if (typeof savedTeams[team] === "string"){
+                teams[team] = savedTeams[team];
+            }
+        }
+
+        currentTeams = teams;
+        renderTeams(currentTeams);
+    })
+    .catch(error => {
+        teamsStatus.textContent = error.message;
+    });
 
 fetch("upcoming_homegames.json")
 .then(response => response.json())

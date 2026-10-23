@@ -67,6 +67,9 @@ jobs:
           git config --global user.email "ttbot@github.local"
 
           git add upcoming_homegames.json
+          if [ -f homegame_post.png ]; then
+            git add homegame_post.png
+          fi
 
           git diff --staged --quiet || git commit -m "Update upcoming homegames"
 
