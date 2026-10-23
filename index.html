@@ -39,6 +39,18 @@
             font-weight:bold;
         }
 
+        .homegame-card{
+            border:1px solid #ddd;
+            padding:15px;
+            margin-bottom:10px;
+            border-radius:10px;
+            background:#f8f8f8;
+        }
+
+        .homegame-card h3{
+            margin:0;
+        }
+
         table{
             width:100%;
             border-collapse:collapse;
@@ -285,38 +297,32 @@ fetch("teams.json")
 fetch("upcoming_homegames.json")
 .then(response => response.json())
 .then(data => {
-
-    let html = "";
+    const homegames = document.getElementById("homegames");
+    const cards = document.createDocumentFragment();
 
     data.forEach(game => {
+        const card = document.createElement("div");
+        const team = document.createElement("h3");
+        const details = document.createElement("p");
+        const opponent = document.createElement("strong");
 
-        html += `
-            <div style="
-                border:1px solid #ddd;
-                padding:15px;
-                margin-bottom:10px;
-                border-radius:10px;
-                background:#f8f8f8;
-            ">
-
-                <h3 style="margin:0;">
-                    ${game.mannschaft}
-                </h3>
-
-                <p>
-                    <strong>${game.gegner}</strong><br>
-                    ${game.datum}<br>
-                    ${game.uhrzeit} Uhr<br>
-                    ${game.ort}
-                </p>
-
-            </div>
-        `;
+        card.className = "homegame-card";
+        team.textContent = game.mannschaft;
+        opponent.textContent = game.gegner;
+        details.append(
+            opponent,
+            document.createElement("br"),
+            document.createTextNode(game.datum),
+            document.createElement("br"),
+            document.createTextNode(`${game.uhrzeit} Uhr`),
+            document.createElement("br"),
+            document.createTextNode(game.ort)
+        );
+        card.append(team, details);
+        cards.appendChild(card);
     });
 
-    document.getElementById(
-        "homegames"
-    ).innerHTML = html;
+    homegames.replaceChildren(cards);
 });
 
 </script>

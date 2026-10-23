@@ -1,147 +1,42 @@
-DJK Leutershausen Instagram Bot
-Zweck
-Dieses Projekt erstellt automatisch den wöchentlichen Instagram-Post der Tischtennis-Abteilung der DJK Leutershausen.
+# Tischtennis Bot Manager
 
-Jeden Sonntag werden die Ergebnisse der aktuellen Kalenderwoche sowie die nächsten Heimspiele aus Click-TT ausgelesen, grafisch aufbereitet und per E-Mail versendet.
+Automatisiert die Auswertung von Click-TT-Spielplänen, erzeugt Instagram- und Heimspielgrafiken und zeigt die aktuellen Informationen auf einer statischen Webseite an.
 
-Funktionen
-Auswertung von Click-TT / myTischtennis
-Ergebnisse einer frei wählbaren Kalenderwoche
-Ermittlung des nächsten Heimspiels jeder Mannschaft
-Automatische Erstellung einer Instagram-Grafik
-Automatischer Mailversand
-Manuelle und automatische Ausführung über GitHub Actions
-Ausgewertete Mannschaften
-Erwachsene
-Mannschaft
-Mannschaft
-Jugend
-Jugend I
-Jugend II
-Jugend III
-Die Mannschaften und zugehörigen Click-TT-Links werden in teams.py gepflegt.
+## Webseite
 
-Projektdateien
-teams.py
-generate_report.py
-create_instagram_image.py
-send_email.py
-template.png
-Gagalin.otf
-instagram_report.txt
-.github/workflows/check.yml
-teams.py
-Enthält die Click-TT Spielplan-URLs aller Mannschaften.
+- `index.html` zeigt die zuletzt veröffentlichten Grafiken, das nächste Heimspiel pro Mannschaft und die Mannschaftslinks.
+- `manager/index.html` stellt eine einfache Team- und Linkübersicht bereit.
+- Die Links werden zentral in `teams.json` gepflegt. Die Python-Skripte laden diese Datei über `teams.py`.
+- Auf der Hauptseite geänderte Links werden im lokalen Browser gespeichert. Mit „teams.json herunterladen“ erhältst du die Datei, die du anschließend im Repository ersetzen und committen musst. Die Webseite schreibt nicht selbst ins Repository.
 
-generate_report.py
-Liest Click-TT aus
-Ermittelt Ergebnisse der gewählten KW
-Ermittelt die nächsten Heimspiele
-Erstellt instagram_report.txt
-create_instagram_image.py
-Liest instagram_report.txt
-Befüllt das Instagram-Template
-Erstellt instagram_post.png
-send_email.py
-Versendet die fertige Grafik per E-Mail
-Betreff enthält automatisch die Kalenderwoche
-GitHub Secrets
-Folgende Secrets müssen eingerichtet sein:
+## Automatische Abläufe
 
-EMAIL_USER
-Bot-Mailadresse
+Die Workflows liegen unter `.github/workflows/` und benötigen Python 3.11 sowie `requests` und `pillow`.
 
-Beispiel:
+### TT Agent
 
-djk.tt.instagram@gmail.com
-EMAIL_PASSWORD
-Google App-Passwort
+`check.yml` läuft sonntags um 16:00 UTC. Das entspricht 18:00 Uhr während der deutschen Sommerzeit und 17:00 Uhr während der Winterzeit. Der Workflow erstellt den Wochenbericht und `instagram_post.png`, lädt Bericht und Grafik als Actions-Artefakte hoch und committet die aktualisierte Grafik.
 
-Nicht das normale Gmail-Passwort verwenden.
+Bei manueller Ausführung können Kalenderwoche und Jahr angegeben werden. Eine E-Mail wird bei einem geplanten Lauf oder bei manueller Ausführung mit `send_mail: yes` verschickt.
 
-EMAIL_TO
-Empfängerliste.
+### TT Homegame Bot
 
-Mehrere Empfänger werden durch Komma getrennt:
+`homegame.yml` läuft täglich um 07:00 UTC (09:00 Uhr im Sommer, 08:00 Uhr im Winter). Er aktualisiert `upcoming_homegames.json` und erzeugt eine Heimspielgrafik, wenn das nächste Heimspiel der 1. Mannschaft genau zwei Tage entfernt ist. Grafik und JSON werden als Artefakte hochgeladen; die aktualisierte JSON-Datei und eine erzeugte Grafik werden ins Repository committet.
 
-adresse1@gmail.com,adresse2@gmail.com
-Workflow
-Datei:
+## E-Mail-Konfiguration
 
-.github/workflows/check.yml
-Manuelle Ausführung
-Actions
-→ TT Agent
-→ Run workflow
-Parameter:
+Für den Versand müssen folgende GitHub Actions Secrets eingerichtet sein:
 
-KW
-Jahr
-Automatische Ausführung
-Jeden Sonntag um 18:00 Uhr.
+- `EMAIL_USER`: Absenderadresse
+- `EMAIL_PASSWORD`: App-Passwort des E-Mail-Kontos
+- `EMAIL_TO`: Empfänger; mehrere Adressen mit Komma trennen
 
-Cron:
+## Wichtige Dateien
 
-schedule:
-  - cron: '0 16 * * 0'
-Ablauf
-GitHub Action
-
-↓
-
-Click-TT auslesen
-
-↓
-
-Report erzeugen
-
-↓
-
-Instagram-Grafik erzeugen
-
-↓
-
-E-Mail versenden
-
-↓
-
-Fertiger Instagram-Post
-Layoutbereiche
-Ergebnisse Erwachsene
-X: 140 - 940
-Y: 610 - 790
-Ergebnisse Jugend
-X: 140 - 940
-Y: 800 - 1030
-Heimspiele Erwachsene
-X: 140 - 940
-Y: 1250 - 1500
-Heimspiele Jugend
-X: 140 - 940
-Y: 1510 - 1850
-Verwendete Schrift
-Gagalin.otf
-Wartung
-Neue Empfänger hinzufügen
-Settings
-→ Secrets and Variables
-→ Actions
-→ EMAIL_TO
-Mehrere Empfänger mit Komma trennen.
-
-Mannschaften ändern
-Datei:
-
-teams.py
-anpassen.
-
-Instagram-Layout ändern
-Datei:
-
-create_instagram_image.py
-anpassen.
-
-Versionsstand
-Aktueller produktiver Stand:
-
-v1.0
+- `teams.json`: Click-TT-URLs aller Mannschaften
+- `generate_report.py`: Ergebnisse und nächste Heimspiele für den Wochenbericht
+- `generate_upcoming_homegames.py`: nächstes Heimspiel jeder Mannschaft für die Webseite
+- `generate_homegame_data.py`: Daten für die Heimspielankündigung
+- `create_instagram_image.py` und `create_homegame_image.py`: PNG-Erzeugung
+- `template.png` und `template_heimspiel.png`: Grafikvorlagen
+- `Gagalin-Regular.otf`: Schrift für die Grafiken

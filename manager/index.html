@@ -68,15 +68,20 @@ fetch("../teams.json")
 
                 const row =
                     document.createElement("tr");
+                const teamCell =
+                    document.createElement("td");
+                const linkCell =
+                    document.createElement("td");
+                const link =
+                    document.createElement("a");
 
-                row.innerHTML = `
-                    <td>${team}</td>
-                    <td>
-                        <a href="${url}" target="_blank">
-                            Link öffnen
-                        </a>
-                    </td>
-                `;
+                teamCell.textContent = team;
+                link.href = url;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "Link öffnen";
+                linkCell.appendChild(link);
+                row.append(teamCell, linkCell);
 
                 tbody.appendChild(row);
             }
