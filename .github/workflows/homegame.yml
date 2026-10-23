@@ -7,6 +7,9 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   homegame:
     runs-on: ubuntu-latest
@@ -49,5 +52,16 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: homegame-post
+
+       - name: Commit updated JSON
+         run: |
+          git config --global user.name "TT Bot"
+          git config --global user.email "ttbot@github.local"
+
+          git add upcoming_homegames.json
+
+          git diff --staged --quiet || git commit -m "Update upcoming homegames"
+
+          git push
           path: homegame_post.png
           if-no-files-found: ignore
