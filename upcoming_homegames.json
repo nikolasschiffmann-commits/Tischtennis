@@ -21,6 +21,13 @@
     "ort": "Leutershausen"
   },
   {
+    "mannschaft": "Jugend II",
+    "gegner": "TSV Unsleben",
+    "datum": "12.11.2026",
+    "uhrzeit": "17:30",
+    "ort": "Leutershausen"
+  },
+  {
     "mannschaft": "1. Mannschaft",
     "gegner": "TSV Bad Königshofen IV",
     "datum": "13.11.2026",
@@ -32,6 +39,111 @@
     "gegner": "TSV Arnshausen",
     "datum": "17.11.2026",
     "uhrzeit": "17:30",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "Jugend II",
+    "gegner": "TSV Stangenroth III",
+    "datum": "19.11.2026",
+    "uhrzeit": "17:30",
+    "ort": "Leutershausen"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV 1923 Großbardorf II",
+    "datum": "20.11.2026",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "Jugend I",
+    "gegner": "TV/DJK Hammelburg",
+    "datum": "04.12.2026",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TTC Mellrichstadt II",
+    "datum": "15.01.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "FC Geldersheim II",
+    "datum": "22.01.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "SV Frankenheim II",
+    "datum": "29.01.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV Brendlorenzen III",
+    "datum": "05.02.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV 1923 Großbardorf III",
+    "datum": "19.02.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "1. FC Arnstein",
+    "datum": "26.02.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "SV Herschfeld",
+    "datum": "05.03.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV Aschach e.V. III",
+    "datum": "05.03.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "TSV Stangenroth",
+    "datum": "19.03.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "DJK Löhrieth",
+    "datum": "19.03.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "DJK Gänheim II",
+    "datum": "09.04.2027",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV Stangenroth IV",
+    "datum": "09.04.2027",
+    "uhrzeit": "19:00",
     "ort": "Hohenroth"
   }
 ]
