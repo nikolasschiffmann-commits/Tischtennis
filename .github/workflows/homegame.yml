@@ -1,5 +1,8 @@
 name: TT Homegame Bot
 
+permissions:
+  contents: write
+  
 on:
   schedule:
     # Täglich 09:00 Uhr Deutschland (Sommerzeit)
@@ -7,8 +10,6 @@ on:
 
   workflow_dispatch:
 
-permissions:
-  contents: write
 
 jobs:
   homegame:
