@@ -1,12 +1,5 @@
 [
   {
-    "mannschaft": "2. Mannschaft",
-    "gegner": "TSV 1894 Heustreu ",
-    "datum": "23.10.2026",
-    "uhrzeit": "19:00",
-    "ort": "Hohenroth"
-  },
-  {
     "mannschaft": "Jugend III",
     "gegner": "TSV 1923 Großbardorf",
     "datum": "27.10.2026",
@@ -32,6 +25,13 @@
     "gegner": "TSV Arnshausen",
     "datum": "17.11.2026",
     "uhrzeit": "17:30",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV 1923 Großbardorf II",
+    "datum": "20.11.2026",
+    "uhrzeit": "19:00",
     "ort": "Hohenroth"
   }
 ]
