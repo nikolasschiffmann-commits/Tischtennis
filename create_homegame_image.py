@@ -2,15 +2,19 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
-if not os.path.exists("homegame.json"):
+DATA_FILE = os.environ.get("DATA_FILE", "homegame.json")
+TEMPLATE_FILE = os.environ.get("TEMPLATE_FILE", "template_heimspiel.png")
+OUTPUT_FILE = os.environ.get("OUTPUT_FILE", "homegame_post.png")
+
+if not os.path.exists(DATA_FILE):
     print("Kein Heimspiel in 2 Tagen gefunden.")
     quit()
 
-img = Image.open("template_heimspiel.png")
+img = Image.open(TEMPLATE_FILE)
 draw = ImageDraw.Draw(img)
 
 with open(
-    "homegame.json",
+    DATA_FILE,
     "r",
     encoding="utf-8"
 ) as f:
@@ -88,6 +92,6 @@ for line in info_lines:
 
     y += 85
 
-img.save("homegame_post.png")
+img.save(OUTPUT_FILE)
 
-print("homegame_post.png erstellt")
+print(f"{OUTPUT_FILE} erstellt")

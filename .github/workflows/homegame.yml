@@ -47,12 +47,46 @@ jobs:
         run: |
           python send_homegame_email.py
 
+      - name: Generate Second Team Homegame Data
+        env:
+          TEAM_NAME: 2. Mannschaft
+          DATA_FILE: homegame2.json
+        run: |
+          python generate_homegame_data.py
+
+      - name: Create Second Team Homegame Image
+        env:
+          DATA_FILE: homegame2.json
+          TEMPLATE_FILE: template_heimspiel2.png
+          OUTPUT_FILE: homegame_post2.png
+        run: |
+          python create_homegame_image.py
+
+      - name: Send Second Team Homegame Email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          TEAM_NAME: 2. Mannschaft
+          DATA_FILE: homegame2.json
+          IMAGE_FILE: homegame_post2.png
+        run: |
+          python send_homegame_email.py
+
       - name: Upload Homegame Image
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: homegame-post
           path: homegame_post.png
+          if-no-files-found: ignore
+
+      - name: Upload Second Team Homegame Image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homegame-post-second-team
+          path: homegame_post2.png
           if-no-files-found: ignore
 
       - name: Upload Upcoming Homegames JSON
@@ -69,6 +103,9 @@ jobs:
           git add upcoming_homegames.json
           if [ -f homegame_post.png ]; then
             git add homegame_post.png
+          fi
+          if [ -f homegame_post2.png ]; then
+            git add homegame_post2.png
           fi
 
           git diff --staged --quiet || git commit -m "Update upcoming homegames"

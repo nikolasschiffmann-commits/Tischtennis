@@ -2,9 +2,12 @@ from teams import TEAMS
 import requests
 import re
 import json
+import os
 from datetime import datetime
 
-URL = TEAMS["1. Mannschaft"]
+TEAM_NAME = os.environ.get("TEAM_NAME", "1. Mannschaft")
+DATA_FILE = os.environ.get("DATA_FILE", "homegame.json")
+URL = TEAMS[TEAM_NAME]
 
 
 def get_meetings(url):
@@ -93,6 +96,8 @@ days_until_game = (
 ).days
 
 if days_until_game != 2:
+    if os.path.exists(DATA_FILE):
+        os.remove(DATA_FILE)
     print(
         f"Kein Heimspiel in 2 Tagen. "
         f"Nächstes Heimspiel in {days_until_game} Tagen."
@@ -118,7 +123,7 @@ homegame = {
 }
 
 with open(
-    "homegame.json",
+    DATA_FILE,
     "w",
     encoding="utf-8"
 ) as f:

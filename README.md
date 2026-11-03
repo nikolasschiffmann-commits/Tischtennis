@@ -21,7 +21,7 @@ Bei manueller Ausführung können Kalenderwoche und Jahr angegeben werden. Eine 
 
 ### TT Homegame Bot
 
-`homegame.yml` läuft täglich um 07:00 UTC (09:00 Uhr im Sommer, 08:00 Uhr im Winter). Er aktualisiert `upcoming_homegames.json` und erzeugt eine Heimspielgrafik, wenn das nächste Heimspiel der 1. Mannschaft genau zwei Tage entfernt ist. Grafik und JSON werden als Artefakte hochgeladen; die aktualisierte JSON-Datei und eine erzeugte Grafik werden ins Repository committet.
+`homegame.yml` läuft täglich um 07:00 UTC (09:00 Uhr im Sommer, 08:00 Uhr im Winter). Er aktualisiert `upcoming_homegames.json` und erzeugt eine Heimspielgrafik samt E-Mail, wenn das nächste Heimspiel der 1. oder 2. Mannschaft genau zwei Tage entfernt ist. Grafiken und JSON werden als Artefakte hochgeladen; die aktualisierte JSON-Datei und erzeugte Grafiken werden ins Repository committet.
 
 ## E-Mail-Konfiguration
 
@@ -36,7 +36,7 @@ Für den Versand müssen folgende GitHub Actions Secrets eingerichtet sein:
 - `teams.json`: Click-TT-URLs aller Mannschaften
 - `generate_report.py`: Ergebnisse und nächste Heimspiele für den Wochenbericht
 - `generate_upcoming_homegames.py`: nächstes Heimspiel jeder Mannschaft für die Webseite
-- `generate_homegame_data.py`: Daten für die Heimspielankündigung
+- `generate_homegame_data.py`: Daten für die Heimspielankündigungen
 - `create_instagram_image.py` und `create_homegame_image.py`: PNG-Erzeugung
-- `template.png` und `template_heimspiel.png`: Grafikvorlagen
+- `template.png`, `template_heimspiel.png` und `template_heimspiel2.png`: Grafikvorlagen
 - `Gagalin-Regular.otf`: Schrift für die Grafiken

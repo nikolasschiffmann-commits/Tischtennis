@@ -1,16 +1,21 @@
 import os
 import smtplib
+from pathlib import Path
 
 from email.message import EmailMessage
 
+TEAM_NAME = os.environ.get("TEAM_NAME", "1. Mannschaft")
+DATA_FILE = os.environ.get("DATA_FILE", "homegame.json")
+IMAGE_FILE = os.environ.get("IMAGE_FILE", "homegame_post.png")
+
 # Nur senden wenn Bild existiert
-if not os.path.exists("homegame_post.png"):
+if not os.path.exists(DATA_FILE) or not os.path.exists(IMAGE_FILE):
     print("Kein Heimspielpost vorhanden.")
     quit()
 
 msg = EmailMessage()
 
-msg["Subject"] = "DJK Heimspielankündigung - 1. Mannschaft"
+msg["Subject"] = f"DJK Heimspielankündigung - {TEAM_NAME}"
 msg["From"] = (
     f"DJK Leutershausen TT Bot "
     f"<{os.environ['EMAIL_USER']}>"
@@ -18,17 +23,17 @@ msg["From"] = (
 msg["To"] = os.environ["EMAIL_TO"]
 
 msg.set_content(
-    "Die Heimspielankündigung der 1. Mannschaft befindet sich im Anhang."
+    f"Die Heimspielankündigung der {TEAM_NAME} befindet sich im Anhang."
 )
 
-with open("homegame_post.png", "rb") as f:
+with open(IMAGE_FILE, "rb") as f:
     img_data = f.read()
 
 msg.add_attachment(
     img_data,
     maintype="image",
     subtype="png",
-    filename="homegame_post.png"
+    filename=Path(IMAGE_FILE).name
 )
 
 recipients = [
