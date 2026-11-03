@@ -2,29 +2,41 @@
   {
     "mannschaft": "Jugend II",
     "gegner": "TSV Unsleben",
+    "heimspiel": true,
     "datum": "12.11.2026",
     "uhrzeit": "17:30",
     "ort": "Leutershausen"
   },
   {
+    "mannschaft": "Jugend III",
+    "gegner": "TTC Mellrichstadt II",
+    "heimspiel": false,
+    "datum": "12.11.2026",
+    "uhrzeit": "18:15",
+    "ort": "Mellrichstadt"
+  },
+  {
     "mannschaft": "1. Mannschaft",
     "gegner": "TSV Bad Königshofen IV",
+    "heimspiel": true,
     "datum": "13.11.2026",
     "uhrzeit": "19:00",
     "ort": "Hohenroth"
   },
   {
-    "mannschaft": "Jugend I",
-    "gegner": "TSV Arnshausen",
-    "datum": "17.11.2026",
-    "uhrzeit": "17:30",
-    "ort": "Hohenroth"
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV Aschach e.V. III",
+    "heimspiel": false,
+    "datum": "13.11.2026",
+    "uhrzeit": "19:30",
+    "ort": "Bad Bocklet- Aschach"
   },
   {
-    "mannschaft": "2. Mannschaft",
-    "gegner": "TSV 1923 Großbardorf II",
-    "datum": "20.11.2026",
-    "uhrzeit": "19:00",
+    "mannschaft": "Jugend I",
+    "gegner": "TSV Arnshausen",
+    "heimspiel": true,
+    "datum": "17.11.2026",
+    "uhrzeit": "17:30",
     "ort": "Hohenroth"
   }
 ]

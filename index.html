@@ -132,7 +132,7 @@
 
 <p>Verwaltung der Click-TT Mannschaftslinks</p>
 
-<h2>Kommende Heimspiele</h2>
+<h2>Nächste Spiele</h2>
 <div id="homegames"></div>
 
 <h2>Mannschaften</h2>
@@ -310,6 +310,7 @@ fetch("upcoming_homegames.json")
         team.textContent = game.mannschaft;
         opponent.textContent = game.gegner;
         details.append(
+            document.createTextNode(game.heimspiel ? "Heimspiel gegen " : "Auswärtsspiel bei "),
             opponent,
             document.createElement("br"),
             document.createTextNode(game.datum),

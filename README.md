@@ -35,7 +35,7 @@ Für den Versand müssen folgende GitHub Actions Secrets eingerichtet sein:
 
 - `teams.json`: Click-TT-URLs aller Mannschaften
 - `generate_report.py`: Ergebnisse und nächste Heimspiele für den Wochenbericht
-- `generate_upcoming_homegames.py`: nächstes Heimspiel jeder Mannschaft für die Webseite
+- `generate_upcoming_homegames.py`: nächstes Spiel jeder Mannschaft für die Webseite
 - `generate_homegame_data.py`: Daten für die Heimspielankündigungen
 - `create_instagram_image.py` und `create_homegame_image.py`: PNG-Erzeugung
 - `template.png`, `template_heimspiel.png` und `template_heimspiel2.png`: Grafikvorlagen

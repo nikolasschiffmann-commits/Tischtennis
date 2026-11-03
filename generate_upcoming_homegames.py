@@ -62,7 +62,7 @@ for team_name, url in TEAMS.items():
     if not meetings:
         continue
 
-    home_games = []
+    scheduled_games = []
 
     for day in meetings:
 
@@ -71,32 +71,31 @@ for team_name, url in TEAMS.items():
 
         for game in games:
 
-            if (
-                game["state"] == "scheduled"
-                and "DJK Leutershausen" in game["team_home"]
-            ):
-                home_games.append(game)
+            if game["state"] == "scheduled":
+                scheduled_games.append(game)
 
-    if not home_games:
+    if not scheduled_games:
         continue
 
-    next_home = min(
-        home_games,
+    next_game = min(
+        scheduled_games,
         key=lambda game: game["date"]
     )
 
+    is_home = "DJK Leutershausen" in next_game["team_home"]
     dt = datetime.fromisoformat(
-        next_home["date"]
+        next_game["date"]
     ).astimezone(
         ZoneInfo("Europe/Berlin")
     )
 
     upcoming_homegames.append({
         "mannschaft": team_name,
-        "gegner": next_home["team_away"],
+        "gegner": next_game["team_away"] if is_home else next_game["team_home"],
+        "heimspiel": is_home,
         "datum": dt.strftime("%d.%m.%Y"),
         "uhrzeit": dt.strftime("%H:%M"),
-        "ort": next_home["location"]["city"]
+        "ort": next_game["location"]["city"]
     })
 
 upcoming_homegames.sort(
