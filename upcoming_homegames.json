@@ -13,7 +13,7 @@
     "heimspiel": false,
     "datum": "12.11.2026",
     "uhrzeit": "18:15",
-    "ort": "Mellrichstadt"
+    "ort": "Ort nicht angegeben"
   },
   {
     "mannschaft": "1. Mannschaft",
@@ -21,7 +21,7 @@
     "heimspiel": true,
     "datum": "13.11.2026",
     "uhrzeit": "19:00",
-    "ort": "Hohenroth"
+    "ort": "Leutershausen"
   },
   {
     "mannschaft": "2. Mannschaft",
@@ -29,7 +29,7 @@
     "heimspiel": false,
     "datum": "13.11.2026",
     "uhrzeit": "19:30",
-    "ort": "Bad Bocklet- Aschach"
+    "ort": "Ort nicht angegeben"
   },
   {
     "mannschaft": "Jugend I",
@@ -37,6 +37,6 @@
     "heimspiel": true,
     "datum": "17.11.2026",
     "uhrzeit": "17:30",
-    "ort": "Hohenroth"
+    "ort": "Leutershausen"
   }
 ]
