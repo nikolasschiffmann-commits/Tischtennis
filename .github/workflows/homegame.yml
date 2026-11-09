@@ -9,6 +9,15 @@ on:
     - cron: '0 7 * * *'
 
   workflow_dispatch:
+    inputs:
+      send_mail:
+        description: 'Mail versenden?'
+        required: true
+        type: choice
+        options:
+          - 'no'
+          - 'yes'
+        default: 'no'
 
 jobs:
   homegame:
@@ -40,6 +49,7 @@ jobs:
           python create_homegame_image.py
 
       - name: Send Homegame Email
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
@@ -63,6 +73,7 @@ jobs:
           python create_homegame_image.py
 
       - name: Send Second Team Homegame Email
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_mail == 'yes' }}
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}

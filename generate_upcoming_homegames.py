@@ -6,6 +6,7 @@ from zoneinfo import ZoneInfo
 
 
 upcoming_homegames = []
+today = datetime.now(ZoneInfo("Europe/Berlin")).date()
 
 for team_name in TEAMS:
 
@@ -25,7 +26,12 @@ for team_name in TEAMS:
 
         for game in games:
 
-            if game["state"] == "scheduled":
+            if (
+                game["state"] == "scheduled"
+                and datetime.fromisoformat(game["date"]).astimezone(
+                    ZoneInfo("Europe/Berlin")
+                ).date() >= today
+            ):
                 scheduled_games.append(game)
 
     if not scheduled_games:

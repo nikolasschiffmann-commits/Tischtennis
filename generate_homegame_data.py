@@ -8,6 +8,7 @@ TEAM_NAME = os.environ.get("TEAM_NAME", "1. Mannschaft")
 DATA_FILE = os.environ.get("DATA_FILE", "homegame.json")
 
 meetings = get_meetings(TEAM_NAME)
+today = datetime.now(ZoneInfo("Europe/Berlin")).date()
 
 home_games = []
 
@@ -21,6 +22,9 @@ for day in meetings:
         if (
             game["state"] == "scheduled"
             and "DJK Leutershausen" in game["team_home"]
+            and datetime.fromisoformat(game["date"]).astimezone(
+                ZoneInfo("Europe/Berlin")
+            ).date() >= today
         ):
             home_games.append(game)
 
@@ -38,8 +42,6 @@ next_home = home_games[0]
 dt = datetime.fromisoformat(
     next_home["date"]
 )
-
-today = datetime.now(ZoneInfo("Europe/Berlin")).date()
 
 game_date = dt.date()
 
