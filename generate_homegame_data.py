@@ -1,61 +1,13 @@
-from teams import TEAMS
-import requests
-import re
+from bttv import get_meetings
 import json
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 TEAM_NAME = os.environ.get("TEAM_NAME", "1. Mannschaft")
 DATA_FILE = os.environ.get("DATA_FILE", "homegame.json")
-URL = TEAMS[TEAM_NAME]
 
-
-def get_meetings(url):
-
-    html = requests.get(url).text
-
-    match = re.search(
-        r'window\.__remixContext\s*=\s*({.*?});',
-        html,
-        re.DOTALL
-    )
-
-    if not match:
-        raise Exception(
-            f"__remixContext nicht gefunden: {url}"
-        )
-
-    data = json.loads(match.group(1))
-
-    meetings = None
-
-    def find_meetings(obj):
-        nonlocal meetings
-
-        if meetings:
-            return
-
-        if isinstance(obj, dict):
-
-            for key, value in obj.items():
-
-                if key == "meetings":
-                    meetings = value
-                    return
-
-                find_meetings(value)
-
-        elif isinstance(obj, list):
-
-            for item in obj:
-                find_meetings(item)
-
-    find_meetings(data)
-
-    return meetings
-
-
-meetings = get_meetings(URL)
+meetings = get_meetings(TEAM_NAME)
 
 home_games = []
 
@@ -87,7 +39,7 @@ dt = datetime.fromisoformat(
     next_home["date"]
 )
 
-today = datetime.now().date()
+today = datetime.now(ZoneInfo("Europe/Berlin")).date()
 
 game_date = dt.date()
 
@@ -118,7 +70,11 @@ homegame = {
     "gegner": next_home["team_away"],
     "wochentag": wochentage[dt.strftime("%A")],
     "datum": dt.strftime("%d.%m.%Y"),
-    "uhrzeit": dt.strftime("%H:%M UHR"),
+    "uhrzeit": (
+        f"{dt.strftime('%H:%M')} UHR"
+        if next_home["time_available"]
+        else "UHRZEIT NOCH OFFEN"
+    ),
     "ort": next_home["location"]["city"].upper()
 }
 

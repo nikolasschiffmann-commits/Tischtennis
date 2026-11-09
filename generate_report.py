@@ -1,7 +1,4 @@
-from teams import TEAMS
-import requests
-import re
-from bs4 import BeautifulSoup
+from bttv import get_meetings
 from datetime import datetime, date
 from zoneinfo import ZoneInfo
 import os
@@ -16,115 +13,10 @@ else:
 
 kw_start = date.fromisocalendar(JAHR, KW, 1)
 kw_ende = date.fromisocalendar(JAHR, KW, 7)
+SEASON_START_YEAR = kw_start.year if kw_start.month >= 7 else kw_start.year - 1
 
 ERWACHSENE = ["1. Mannschaft", "2. Mannschaft"]
 JUGEND = ["Jugend I", "Jugend II", "Jugend III"]
-
-
-BTTV_CLUB_ID = "23774"
-BTTV_MEETINGS_URL = "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings"
-MEETINGS_CACHE = {}
-
-
-def get_meetings(team):
-
-    if team in MEETINGS_CACHE:
-        return MEETINGS_CACHE[team]
-
-    team_id_match = re.search(r"/mannschaft/(\d+)/", TEAMS[team])
-    if not team_id_match:
-        raise ValueError(f"Keine Mannschafts-ID für {team} gefunden")
-
-    season_start_year = kw_start.year if kw_start.month >= 7 else kw_start.year - 1
-    season_start = date(season_start_year, 7, 1).strftime("%d.%m.%Y")
-    season_end = date(season_start_year + 1, 6, 30).strftime("%d.%m.%Y")
-
-    response = requests.get(
-        BTTV_MEETINGS_URL,
-        params={
-            "club": BTTV_CLUB_ID,
-            "searchType": "1",
-            "searchTimeRangeFrom": season_start,
-            "searchTimeRangeTo": season_end,
-            "selectedTeamId": team_id_match.group(1),
-            "searchMeetings": "Suchen",
-        },
-        timeout=30,
-    )
-    response.raise_for_status()
-
-    soup = BeautifulSoup(response.content, "html.parser")
-    table = soup.select_one("table.result-set")
-    if table is None:
-        raise ValueError(f"Keine Begegnungstabelle für {team} gefunden")
-
-    header_row = table.select_one("tr")
-    header_cells = header_row.select("th, td") if header_row else []
-    headers = [cell.get_text(" ", strip=True) for cell in header_cells]
-    required_headers = [
-        "Datum",
-        "Zeit",
-        "Ort",
-        "Heimmannschaft",
-        "Gastmannschaft",
-        "Spiele",
-    ]
-    missing_headers = [header for header in required_headers if header not in headers]
-    if missing_headers:
-        raise ValueError(f"Fehlende Tabellenspalten: {', '.join(missing_headers)}")
-
-    columns = {header: headers.index(header) for header in required_headers}
-    grouped_meetings = {}
-    last_match_date = None
-
-    for row in table.select("tr")[1:]:
-        cells = [cell.get_text(" ", strip=True) for cell in row.select("td")]
-        if len(cells) < len(headers):
-            continue
-
-        if cells[columns["Datum"]]:
-            last_match_date = cells[columns["Datum"]]
-        if not last_match_date:
-            continue
-
-        team_home = cells[headers.index("Heimmannschaft")]
-        team_away = cells[headers.index("Gastmannschaft")]
-        if not team_home or not team_away:
-            continue
-
-        match_date = datetime.strptime(last_match_date, "%d.%m.%Y").date()
-        time_match = re.search(r"\d{1,2}:\d{2}", cells[columns["Zeit"]])
-        match_time = (
-            datetime.strptime(time_match.group(), "%H:%M").time()
-            if time_match
-            else datetime.min.time()
-        )
-        match_datetime = datetime.combine(
-            match_date,
-            match_time,
-            tzinfo=ZoneInfo("Europe/Berlin"),
-        )
-        score_match = re.fullmatch(r"(\d+)\s*:\s*(\d+)", cells[columns["Spiele"]])
-        game = {
-            "date": match_datetime.isoformat(),
-            "time_available": time_match is not None,
-            "state": "done" if score_match else "scheduled",
-            "team_home": team_home,
-            "team_away": team_away,
-            "matches_won": score_match.group(1) if score_match else None,
-            "matches_lost": score_match.group(2) if score_match else None,
-            "location": {
-                "city": "Leutershausen" if "DJK Leutershausen" in team_home else None
-            },
-        }
-        grouped_meetings.setdefault(match_date.isoformat(), []).append(game)
-
-    meetings = [
-        {match_date: games}
-        for match_date, games in grouped_meetings.items()
-    ]
-    MEETINGS_CACHE[team] = meetings
-    return meetings
 
 
 report = []
@@ -140,7 +32,7 @@ for team in ERWACHSENE:
 
     print(f"Lade Team: {team}")
 
-    meetings = get_meetings(team)
+    meetings = get_meetings(team, SEASON_START_YEAR)
 
     if meetings is None:
         raise Exception(
@@ -187,7 +79,7 @@ for team in JUGEND:
 
     print(f"Lade Team: {team}")
 
-    meetings = get_meetings(team)
+    meetings = get_meetings(team, SEASON_START_YEAR)
 
     if meetings is None:
         raise Exception(
@@ -237,7 +129,7 @@ for team in ERWACHSENE:
 
     print(f"Lade Heimspiele Team: {team}")
 
-    meetings = get_meetings(team)
+    meetings = get_meetings(team, SEASON_START_YEAR)
 
     if meetings is None:
         raise Exception(
@@ -317,7 +209,7 @@ for team in JUGEND:
 
     print(f"Lade Heimspiele Team: {team}")
 
-    meetings = get_meetings(team)
+    meetings = get_meetings(team, SEASON_START_YEAR)
 
     if meetings is None:
         raise Exception(

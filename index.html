@@ -315,7 +315,11 @@ fetch("upcoming_homegames.json")
             document.createElement("br"),
             document.createTextNode(game.datum),
             document.createElement("br"),
-            document.createTextNode(`${game.uhrzeit} Uhr`),
+            document.createTextNode(
+                game.uhrzeit === "Uhrzeit noch offen"
+                    ? game.uhrzeit
+                    : `${game.uhrzeit} Uhr`
+            ),
             document.createElement("br"),
             document.createTextNode(game.ort)
         );
