@@ -11,7 +11,7 @@ Automatisiert die Auswertung von Click-TT-Spielplänen, erzeugt Instagram- und H
 
 ## Automatische Abläufe
 
-Die Workflows liegen unter `.github/workflows/` und benötigen Python 3.11 sowie `requests` und `pillow`.
+Die Workflows liegen unter `.github/workflows/` und benötigen Python 3.11 sowie `requests`, `beautifulsoup4` und `pillow`.
 
 ### TT Agent
 

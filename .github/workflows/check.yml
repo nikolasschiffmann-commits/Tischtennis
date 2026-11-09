@@ -39,7 +39,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests pillow
+          pip install requests pillow beautifulsoup4
 
       - name: Generate Report
         env:
