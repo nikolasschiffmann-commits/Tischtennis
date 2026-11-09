@@ -54,11 +54,14 @@
     </tbody>
 </table>
 
+<script src="../team_links.js"></script>
 <script>
 
-fetch("../teams.json")
-    .then(response => response.json())
-    .then(data => {
+Promise.all([
+    fetch("../teams.json").then(response => response.json()),
+    fetch("../bttv_config.json").then(response => response.json())
+])
+    .then(([data, config]) => {
 
         const tbody =
             document.querySelector("#teamsTable tbody");
@@ -76,7 +79,11 @@ fetch("../teams.json")
                     document.createElement("a");
 
                 teamCell.textContent = team;
-                link.href = url;
+                link.href = currentSeasonUrl(
+                    url,
+                    config.season_start_month,
+                    config.team_ids[team]
+                );
                 link.target = "_blank";
                 link.rel = "noopener noreferrer";
                 link.textContent = "Link öffnen";

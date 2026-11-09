@@ -1,11 +1,11 @@
  {
-    "1. Mannschaft": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchTimeRangeFrom=01.07.2026&searchTimeRangeTo=30.06.2027&selectedTeamId=3115893&searchMeetings=Suchen",
+    "1. Mannschaft": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchMeetings=Suchen",
 
-    "2. Mannschaft": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchTimeRangeFrom=01.07.2026&searchTimeRangeTo=30.06.2027&selectedTeamId=3116721&searchMeetings=Suchen",
+    "2. Mannschaft": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchMeetings=Suchen",
 
-    "Jugend I": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchTimeRangeFrom=01.07.2026&searchTimeRangeTo=30.06.2027&selectedTeamId=3120405&searchMeetings=Suchen",
+    "Jugend I": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchMeetings=Suchen",
 
-    "Jugend II": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchTimeRangeFrom=01.07.2026&searchTimeRangeTo=30.06.2027&selectedTeamId=3119913&searchMeetings=Suchen",
+    "Jugend II": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchMeetings=Suchen",
 
-    "Jugend III": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchTimeRangeFrom=01.07.2026&searchTimeRangeTo=30.06.2027&selectedTeamId=3141767&searchMeetings=Suchen"
+    "Jugend III": "https://bttv.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/clubMeetings?club=23774&searchType=1&searchMeetings=Suchen"
 }

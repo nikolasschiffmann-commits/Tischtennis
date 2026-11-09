@@ -1,5 +1,7 @@
 import json
 
+from bttv import get_team_url
+
 with open(
     "teams.json",
     "r",
@@ -13,5 +15,5 @@ print()
 
 for team, url in teams.items():
     print(f"{team}")
-    print(url)
+    print(get_team_url(team))
     print()

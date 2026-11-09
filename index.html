@@ -156,6 +156,7 @@
     <p id="teamsStatus" role="status" aria-live="polite"></p>
 </form>
 
+<script src="team_links.js"></script>
 <script>
 
 const latestImages = [...document.querySelectorAll("[data-latest-image]")];
@@ -178,6 +179,8 @@ latestImages.forEach(image => {
 const teamsForm = document.getElementById("teamsForm");
 const teamsStatus = document.getElementById("teamsStatus");
 let currentTeams = {};
+let seasonStartMonth = 7;
+let teamIds = {};
 
 function renderTeams(teams){
     const tbody = document.querySelector("#teamsTable tbody");
@@ -197,7 +200,7 @@ function renderTeams(teams){
         input.value = url;
         input.required = true;
         input.setAttribute("aria-label", `Click-TT URL für ${team}`);
-        link.href = url;
+        link.href = currentSeasonUrl(url, seasonStartMonth, teamIds[team]);
         link.target = "_blank";
         link.rel = "noopener noreferrer";
         link.textContent = "Öffnen";
@@ -270,15 +273,23 @@ document.getElementById("resetTeams").addEventListener("click", () => {
     window.location.reload();
 });
 
-fetch("teams.json")
-    .then(response => {
+Promise.all([
+    fetch("teams.json").then(response => {
         if (!response.ok){
             throw new Error("teams.json konnte nicht geladen werden.");
         }
-
+        return response.json();
+    }),
+    fetch("bttv_config.json").then(response => {
+        if (!response.ok){
+            throw new Error("bttv_config.json konnte nicht geladen werden.");
+        }
         return response.json();
     })
-    .then(teams => {
+])
+    .then(([teams, config]) => {
+        seasonStartMonth = config.season_start_month;
+        teamIds = config.team_ids;
         const savedTeams = JSON.parse(localStorage.getItem("teamLinks") || "{}");
 
         for (const team of Object.keys(teams)){

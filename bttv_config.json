@@ -1,0 +1,18 @@
+{
+    "club_id": "23774",
+    "season_start_month": 7,
+    "team_ids": {
+        "1. Mannschaft": "3115893",
+        "2. Mannschaft": "3116721",
+        "Jugend I": "3120405",
+        "Jugend II": "3119913",
+        "Jugend III": "3141767"
+    },
+    "teams_by_league": {
+        "BL E": "1. Mannschaft",
+        "BKC E": "2. Mannschaft",
+        "BKA J19": "Jugend I",
+        "BKC J19": "Jugend II",
+        "BKD MJ19": "Jugend III"
+    }
+}

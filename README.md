@@ -11,7 +11,7 @@ Automatisiert die Auswertung von Click-TT-Spielplänen, erzeugt Instagram- und H
 
 ## Automatische Abläufe
 
-Die Workflows liegen unter `.github/workflows/` und benötigen Python 3.11 sowie `requests`, `beautifulsoup4` und `pillow`.
+Die Workflows liegen unter `.github/workflows/` und verwenden Python 3.11 sowie die in `requirements.txt` festgelegten Paketversionen.
 
 ### TT Agent
 
@@ -21,7 +21,7 @@ Bei manueller Ausführung können Kalenderwoche und Jahr angegeben werden. Eine 
 
 ### TT Homegame Bot
 
-`homegame.yml` läuft täglich um 07:00 UTC (09:00 Uhr im Sommer, 08:00 Uhr im Winter). Er aktualisiert `upcoming_homegames.json` und erzeugt eine Heimspielgrafik, wenn das nächste Heimspiel der 1. oder 2. Mannschaft genau zwei Tage entfernt ist. Geplante Läufe versenden die E-Mail automatisch. Beim manuellen Start kann `send_mail` auf `yes` oder `no` gesetzt werden (Standard: `no`). Grafiken und JSON werden als Artefakte hochgeladen; die aktualisierte JSON-Datei und erzeugte Grafiken werden ins Repository committet.
+`homegame.yml` läuft täglich um 07:00 UTC (09:00 Uhr im Sommer, 08:00 Uhr im Winter). Er aktualisiert `upcoming_homegames.json` und erzeugt eine Heimspielgrafik, wenn das nächste Heimspiel der 1. oder 2. Mannschaft genau zwei Tage entfernt ist. Geplante Läufe versenden E-Mails und übernehmen Änderungen automatisch. Beim manuellen Start können `send_mail` und `publish` getrennt auf `yes` oder `no` gesetzt werden; beide stehen standardmäßig auf `no`. Ohne `publish: yes` werden manuelle Ergebnisse nur als Actions-Artefakte bereitgestellt und nicht committet oder gepusht.
 
 ## E-Mail-Konfiguration
 
@@ -34,9 +34,15 @@ Für den Versand müssen folgende GitHub Actions Secrets eingerichtet sein:
 ## Wichtige Dateien
 
 - `teams.json`: Click-TT-URLs aller Mannschaften
+- `bttv_config.json`: Vereins-ID, Saisonbeginn, Team-IDs und Zuordnung der BTTV-Liga-Kürzel
+- `requirements.txt`: festgelegte Python-Abhängigkeiten
+- `tests/test_bttv.py`: Offline-Tests des Spielplan-Parsers und Caches
+- `team_links.js`: erstellt saisonaktuelle BTTV-Links für beide Webseiten
 - `generate_report.py`: Ergebnisse und nächste Heimspiele für den Wochenbericht
 - `generate_upcoming_homegames.py`: nächstes Spiel jeder Mannschaft für die Webseite
 - `generate_homegame_data.py`: Daten für die Heimspielankündigungen
 - `create_instagram_image.py` und `create_homegame_image.py`: PNG-Erzeugung
 - `template.png`, `template_heimspiel.png` und `template_heimspiel2.png`: Grafikvorlagen
 - `Gagalin-Regular.otf`: Schrift für die Grafiken
+
+Die Parser-Tests laufen lokal mit `python -m unittest discover -s tests -v` und werden vor den Generierungsschritten in beiden Workflows ausgeführt.

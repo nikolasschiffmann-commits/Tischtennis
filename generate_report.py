@@ -1,4 +1,4 @@
-from bttv import get_meetings
+from bttv import get_meetings, get_season_start_year
 from datetime import datetime, date
 from zoneinfo import ZoneInfo
 import os
@@ -13,7 +13,7 @@ else:
 
 kw_start = date.fromisocalendar(JAHR, KW, 1)
 kw_ende = date.fromisocalendar(JAHR, KW, 7)
-SEASON_START_YEAR = kw_start.year if kw_start.month >= 7 else kw_start.year - 1
+SEASON_START_YEAR = get_season_start_year(kw_start)
 
 ERWACHSENE = ["1. Mannschaft", "2. Mannschaft"]
 JUGEND = ["Jugend I", "Jugend II", "Jugend III"]
