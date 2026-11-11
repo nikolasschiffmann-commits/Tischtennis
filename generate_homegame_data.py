@@ -77,7 +77,7 @@ homegame = {
         if next_home["time_available"]
         else "UHRZEIT NOCH OFFEN"
     ),
-    "ort": next_home["location"]["city"].upper()
+    "ort": (next_home["location"]["city"] or "Ort nicht angegeben").upper()
 }
 
 with open(

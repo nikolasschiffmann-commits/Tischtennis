@@ -188,7 +188,7 @@ for team in ERWACHSENE:
 
         report.append(
             f'AM {dt.strftime("%d.%m")} {game_time} IN '
-            f'{next_home["location"]["city"].upper()}'
+            f'{(next_home["location"]["city"] or "Ort nicht angegeben").upper()}'
         )
 
         report.append("")
@@ -268,7 +268,7 @@ for team in JUGEND:
 
         report.append(
             f'AM {dt.strftime("%d.%m")} {game_time} IN '
-            f'{next_home["location"]["city"].upper()}'
+            f'{(next_home["location"]["city"] or "Ort nicht angegeben").upper()}'
         )
 
         report.append("")
