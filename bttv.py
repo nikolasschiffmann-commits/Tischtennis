@@ -34,7 +34,7 @@ if not 1 <= SEASON_START_MONTH <= 12:
 MEETINGS_CACHE = {}
 CACHE_FILE = Path(tempfile.gettempdir()) / f"tischtennis-bttv-{BTTV_CLUB_ID}-cache.json"
 CACHE_LOADED = False
-CACHE_VERSION = 3
+CACHE_VERSION = 4
 CACHE_CONFIG_SIGNATURE = json.dumps(BTTV_CONFIG, ensure_ascii=False, sort_keys=True)
 
 
@@ -118,7 +118,7 @@ def parse_meetings(content):
 
     header_row = table.select_one("tr")
     headers = [cell.get_text(" ", strip=True) for cell in header_row.select("th, td")] if header_row else []
-    required_headers = ["Datum", "Zeit", "Liga", "Heimmannschaft", "Gastmannschaft", "Spiele"]
+    required_headers = ["Datum", "Zeit", "Liga", "Heimmannschaft", "Gastmannschaft", "Spiele", "Ort"]
     missing_headers = [header for header in required_headers if header not in headers]
     if missing_headers:
         raise ValueError(f"Fehlende Tabellenspalten: {', '.join(missing_headers)}")
@@ -140,6 +140,7 @@ def parse_meetings(content):
 
         team_home = cells[columns["Heimmannschaft"]]
         team_away = cells[columns["Gastmannschaft"]]
+        venue_number = cells[columns["Ort"]]
         if not team_home or not team_away:
             continue
 
@@ -172,7 +173,11 @@ def parse_meetings(content):
             "matches_won": score_match.group(1) if score_match else None,
             "matches_lost": score_match.group(2) if score_match else None,
             "location": {
-                "city": "Leutershausen" if "DJK Leutershausen" in team_home else None
+                "city": (
+                    {"1": "Leutershausen", "2": "Hohenroth"}.get(venue_number)
+                    if "DJK Leutershausen" in team_home
+                    else None
+                )
             },
         }
         grouped_meetings[team_name].setdefault(match_date.isoformat(), []).append(game)

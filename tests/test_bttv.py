@@ -10,13 +10,14 @@ import bttv
 
 
 SCHEDULE_HTML = b"""<table class='result-set'>
-<tr><th>Datum</th><th>Zeit</th><th>Liga</th><th>Heimmannschaft</th><th>Gastmannschaft</th><th>Spiele</th></tr>
-<tr><td>12.11.2026</td><td>19:00</td><td>BL E</td><td>DJK Leutershausen</td><td>Gegner 1</td><td>7:3</td></tr>
-<tr><td></td><td>18:30</td><td>BKC E</td><td>DJK Leutershausen II</td><td>Gegner 2</td><td></td></tr>
-<tr><td>13.11.2026</td><td>17:30</td><td>BKA J19</td><td>DJK Leutershausen</td><td>Gegner 3</td><td>6:4</td></tr>
-<tr><td>14.11.2026</td><td>t/v</td><td>BKC J19</td><td>DJK Leutershausen II</td><td>Gegner 4</td><td></td></tr>
-<tr><td>15.11.2026</td><td>18:00</td><td>BKD MJ19</td><td>DJK Leutershausen III</td><td>Gegner 5</td><td></td></tr>
-<tr><td>16.11.2026</td><td>18:00</td><td>BKP E</td><td>DJK Leutershausen IV</td><td>Gegner 6</td><td></td></tr>
+<tr><th>Datum</th><th>Zeit</th><th>Liga</th><th>Heimmannschaft</th><th>Gastmannschaft</th><th>Spiele</th><th>Ort</th></tr>
+<tr><td>12.11.2026</td><td>19:00</td><td>BL E</td><td>DJK Leutershausen</td><td>Gegner 1</td><td>7:3</td><td>1</td></tr>
+<tr><td></td><td>18:30</td><td>BKC E</td><td>DJK Leutershausen II</td><td>Gegner 2</td><td></td><td>2</td></tr>
+<tr><td>13.11.2026</td><td>17:30</td><td>BKA J19</td><td>DJK Leutershausen</td><td>Gegner 3</td><td>6:4</td><td>2</td></tr>
+<tr><td>14.11.2026</td><td>t/v</td><td>BKC J19</td><td>DJK Leutershausen II</td><td>Gegner 4</td><td></td><td>1</td></tr>
+<tr><td>15.11.2026</td><td>18:00</td><td>BKD MJ19</td><td>DJK Leutershausen III</td><td>Gegner 5</td><td></td><td>1</td></tr>
+<tr><td>16.11.2026</td><td>18:00</td><td>BKP E</td><td>DJK Leutershausen IV</td><td>Gegner 6</td><td></td><td>1</td></tr>
+<tr><td>17.11.2026</td><td>19:00</td><td>BL E</td><td>Gegner 7</td><td>DJK Leutershausen</td><td></td><td>2</td></tr>
 </table>"""
 
 
@@ -54,9 +55,15 @@ class BttvParserTests(unittest.TestCase):
         second_team_game = meetings["2. Mannschaft"][0]["2026-11-12"][0]
         self.assertEqual(second_team_game["state"], "scheduled")
         self.assertTrue(second_team_game["time_available"])
+        self.assertEqual(second_team_game["location"]["city"], "Hohenroth")
+
+        youth_one_game = meetings["Jugend I"][0]["2026-11-13"][0]
+        self.assertEqual(youth_one_game["location"]["city"], "Hohenroth")
 
         youth_two_game = meetings["Jugend II"][0]["2026-11-14"][0]
         self.assertFalse(youth_two_game["time_available"])
+        away_game = meetings["1. Mannschaft"][1]["2026-11-17"][0]
+        self.assertIsNone(away_game["location"]["city"])
 
     def test_season_start_year_handles_july_boundary(self):
         self.assertEqual(bttv.get_season_start_year(date(2026, 6, 30)), 2025)
@@ -90,7 +97,7 @@ class BttvParserTests(unittest.TestCase):
         self.assertTrue(second_team)
         get.assert_called_once()
         saved_cache = json.loads(bttv.CACHE_FILE.read_text(encoding="utf-8"))
-        self.assertEqual(saved_cache["version"], bttv.CACHE_VERSION)
+        self.assertEqual(saved_cache["version"], 4)
         self.assertEqual(len(saved_cache["seasons"]["2026"]), 5)
 
 
