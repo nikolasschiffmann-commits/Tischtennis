@@ -97,8 +97,23 @@ class BttvParserTests(unittest.TestCase):
         self.assertTrue(second_team)
         get.assert_called_once()
         saved_cache = json.loads(bttv.CACHE_FILE.read_text(encoding="utf-8"))
-        self.assertEqual(saved_cache["version"], 4)
+        self.assertEqual(saved_cache["version"], 5)
         self.assertEqual(len(saved_cache["seasons"]["2026"]), 5)
+
+    def test_legacy_cache_is_ignored(self):
+        bttv.CACHE_FILE.write_text(
+            json.dumps({
+                "version": 4,
+                "fetched_on": date.today().isoformat(),
+                "config_signature": bttv.CACHE_CONFIG_SIGNATURE,
+                "seasons": {"2026": {"1. Mannschaft": []}},
+            }),
+            encoding="utf-8",
+        )
+
+        bttv.load_cached_meetings()
+
+        self.assertNotIn(("1. Mannschaft", 2026), bttv.MEETINGS_CACHE)
 
 
 if __name__ == "__main__":
