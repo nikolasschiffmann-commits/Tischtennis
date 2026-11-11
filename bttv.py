@@ -34,7 +34,7 @@ if not 1 <= SEASON_START_MONTH <= 12:
 MEETINGS_CACHE = {}
 CACHE_FILE = Path(tempfile.gettempdir()) / f"tischtennis-bttv-{BTTV_CLUB_ID}-cache.json"
 CACHE_LOADED = False
-CACHE_VERSION = 5
+CACHE_VERSION = 6
 CACHE_CONFIG_SIGNATURE = json.dumps(BTTV_CONFIG, ensure_ascii=False, sort_keys=True)
 
 
@@ -140,7 +140,7 @@ def parse_meetings(content):
 
         team_home = cells[columns["Heimmannschaft"]]
         team_away = cells[columns["Gastmannschaft"]]
-        venue_number = cells[columns["Ort"]]
+        venue_number = cells[columns["Ort"]].strip("()")
         if not team_home or not team_away:
             continue
 
