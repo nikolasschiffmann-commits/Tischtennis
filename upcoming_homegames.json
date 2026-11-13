@@ -1,21 +1,5 @@
 [
   {
-    "mannschaft": "Jugend II",
-    "gegner": "TSV Unsleben",
-    "heimspiel": true,
-    "datum": "12.11.2026",
-    "uhrzeit": "17:30",
-    "ort": "Leutershausen"
-  },
-  {
-    "mannschaft": "Jugend III",
-    "gegner": "TTC Mellrichstadt II",
-    "heimspiel": false,
-    "datum": "12.11.2026",
-    "uhrzeit": "18:15",
-    "ort": "Ort nicht angegeben"
-  },
-  {
     "mannschaft": "1. Mannschaft",
     "gegner": "TSV Bad Königshofen IV",
     "heimspiel": true,
@@ -38,5 +22,21 @@
     "datum": "17.11.2026",
     "uhrzeit": "17:30",
     "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "Jugend II",
+    "gegner": "TSV Stangenroth III",
+    "heimspiel": true,
+    "datum": "19.11.2026",
+    "uhrzeit": "17:30",
+    "ort": "Leutershausen"
+  },
+  {
+    "mannschaft": "Jugend III",
+    "gegner": "RSV Concordia Wollbach II",
+    "heimspiel": false,
+    "datum": "22.11.2026",
+    "uhrzeit": "16:30",
+    "ort": "Ort nicht angegeben"
   }
 ]
