@@ -1,21 +1,5 @@
 [
   {
-    "mannschaft": "Jugend I",
-    "gegner": "TSV Arnshausen",
-    "heimspiel": true,
-    "datum": "17.11.2026",
-    "uhrzeit": "17:30",
-    "ort": "Hohenroth"
-  },
-  {
-    "mannschaft": "1. Mannschaft",
-    "gegner": "SV Herschfeld",
-    "heimspiel": false,
-    "datum": "17.11.2026",
-    "uhrzeit": "20:00",
-    "ort": "Ort nicht angegeben"
-  },
-  {
     "mannschaft": "Jugend II",
     "gegner": "TSV Stangenroth III",
     "heimspiel": true,
@@ -36,6 +20,22 @@
     "gegner": "RSV Concordia Wollbach II",
     "heimspiel": false,
     "datum": "22.11.2026",
+    "uhrzeit": "16:30",
+    "ort": "Ort nicht angegeben"
+  },
+  {
+    "mannschaft": "Jugend I",
+    "gegner": "TV/DJK Hammelburg",
+    "heimspiel": true,
+    "datum": "04.12.2026",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
+  },
+  {
+    "mannschaft": "1. Mannschaft",
+    "gegner": "TSV Stangenroth",
+    "heimspiel": false,
+    "datum": "12.12.2026",
     "uhrzeit": "16:30",
     "ort": "Ort nicht angegeben"
   }
