@@ -1,19 +1,11 @@
 [
   {
-    "mannschaft": "Jugend II",
-    "gegner": "TSV Stangenroth III",
-    "heimspiel": true,
-    "datum": "19.11.2026",
-    "uhrzeit": "17:30",
-    "ort": "Leutershausen"
-  },
-  {
     "mannschaft": "2. Mannschaft",
-    "gegner": "TSV Brendlorenzen III",
-    "heimspiel": false,
-    "datum": "19.11.2026",
-    "uhrzeit": "20:00",
-    "ort": "Ort nicht angegeben"
+    "gegner": "TSV 1923 Großbardorf II",
+    "heimspiel": true,
+    "datum": "20.11.2026",
+    "uhrzeit": "19:00",
+    "ort": "Hohenroth"
   },
   {
     "mannschaft": "Jugend III",
@@ -21,6 +13,14 @@
     "heimspiel": false,
     "datum": "22.11.2026",
     "uhrzeit": "16:30",
+    "ort": "Ort nicht angegeben"
+  },
+  {
+    "mannschaft": "Jugend II",
+    "gegner": "TSV Arnshausen II",
+    "heimspiel": false,
+    "datum": "24.11.2026",
+    "uhrzeit": "18:30",
     "ort": "Ort nicht angegeben"
   },
   {
