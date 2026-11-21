@@ -1,13 +1,5 @@
 [
   {
-    "mannschaft": "2. Mannschaft",
-    "gegner": "TSV 1923 Großbardorf II",
-    "heimspiel": true,
-    "datum": "20.11.2026",
-    "uhrzeit": "19:00",
-    "ort": "Hohenroth"
-  },
-  {
     "mannschaft": "Jugend III",
     "gegner": "RSV Concordia Wollbach II",
     "heimspiel": false,
@@ -21,6 +13,14 @@
     "heimspiel": false,
     "datum": "24.11.2026",
     "uhrzeit": "18:30",
+    "ort": "Ort nicht angegeben"
+  },
+  {
+    "mannschaft": "2. Mannschaft",
+    "gegner": "TSV Stangenroth IV",
+    "heimspiel": false,
+    "datum": "28.11.2026",
+    "uhrzeit": "16:30",
     "ort": "Ort nicht angegeben"
   },
   {
