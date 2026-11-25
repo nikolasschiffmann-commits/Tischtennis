@@ -1,13 +1,5 @@
 [
   {
-    "mannschaft": "Jugend II",
-    "gegner": "TSV Arnshausen II",
-    "heimspiel": false,
-    "datum": "24.11.2026",
-    "uhrzeit": "18:30",
-    "ort": "Ort nicht angegeben"
-  },
-  {
     "mannschaft": "2. Mannschaft",
     "gegner": "DJK Löhrieth",
     "heimspiel": false,
